@@ -37,12 +37,22 @@
             color: white;
             text-align: center;
             padding: 10px;
+            width: 100%;
             position: fixed;
             bottom: 0;
-            width: 100%;
         }
-        .quiz-section {
-            margin: 20px 0;
+        .question {
+            margin-bottom: 15px;
+        }
+        .question h3 {
+            margin-bottom: 10px;
+        }
+        .answer {
+            margin-bottom: 10px;
+            display: block;
+        }
+        .hidden {
+            display: none;
         }
         .start-btn, .next-btn, .submit-btn {
             background-color: #4CAF50;
@@ -53,24 +63,21 @@
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s;
+            margin-top: 20px;
         }
         .start-btn:hover, .next-btn:hover, .submit-btn:hover {
             background-color: #45a049;
         }
-        .hidden {
-            display: none;
+        .correct {
+            background-color: green;
+            color: white;
         }
-        .question {
+        .incorrect {
+            background-color: red;
+            color: white;
+        }
+        .progress {
             margin-bottom: 15px;
-        }
-        .question h3 {
-            margin-bottom: 10px;
-        }
-        .answer {
-            margin-bottom: 10px;
-        }
-        .profile-section, .leaderboard-section, .feedback-section {
-            margin: 20px 0;
         }
     </style>
 </head>
@@ -81,202 +88,25 @@
 </header>
 
 <div class="container">
-    <div class="quiz-section" id="quiz-section">
+    <div class="quiz-section">
         <h2>Dagens Quiz</h2>
-        <form id="quiz-form">
-            <div class="question">
-                <h3>I arbeidsmiljøloven § 1-1 står det at lovens formål er å sikre et arbeidsmiljø som gir grunnlag for en helsefremmende og meningsfylt arbeidssituasjon. Hvilket av følgende er IKKE nevnt som en del av formålet?</h3>
-                <label><input type="radio" name="q1" value="A"> Full trygghet mot fysiske og psykiske skadevirkninger</label><br>
-                <label><input type="radio" name="q1" value="B"> En arbeidsplass med høy lønn</label><br>
-                <label><input type="radio" name="q1" value="C"> En arbeidsplass med meningsfylt arbeidssituasjon</label><br>
-                <label><input type="radio" name="q1" value="D"> Et inkluderende arbeidsliv</label>
-            </div>
-            <div class="question">
-                <h3>I arbeidsmiljøloven § 10-6 står det at overtid skal begrenses. Hva er den maksimale tillatte overtid per uke?</h3>
-                <label><input type="radio" name="q2" value="A"> 10 timer</label><br>
-                <label><input type="radio" name="q2" value="B"> 15 timer</label><br>
-                <label><input type="radio" name="q2" value="C"> 20 timer</label><br>
-                <label><input type="radio" name="q2" value="D"> 25 timer</label>
-            </div>
-            <div class="question">
-                <h3>Ifølge arbeidsmiljøloven § 10-9, hva er kravet til pauser for arbeidstakere som arbeider mer enn 5,5 timer?</h3>
-                <label><input type="radio" name="q3" value="A"> 15 minutter</label><br>
-                <label><input type="radio" name="q3" value="B"> 30 minutter</label><br>
-                <label><input type="radio" name="q3" value="C"> 45 minutter</label><br>
-                <label><input type="radio" name="q3" value="D"> 60 minutter</label>
-            </div>
-            <div class="question">
-                <h3>I arbeidsmiljøloven § 12-2 reguleres svangerskapspermisjon. Hvor mange uker permisjon har en arbeidstaker rett til før fødselen?</h3>
-                <label><input type="radio" name="q4" value="A"> 2 uker</label><br>
-                <label><input type="radio" name="q4" value="B"> 3 uker</label><br>
-                <label><input type="radio" name="q4" value="C"> 4 uker</label><br>
-                <label><input type="radio" name="q4" value="D"> 5 uker</label>
-            </div>
-            <div class="question">
-                <h3>Ifølge arbeidsmiljøloven § 12-9, hvor mange dager permisjon har en arbeidstaker rett til ved barns sykdom per kalenderår?</h3>
-                <label><input type="radio" name="q5" value="A"> 5 dager</label><br>
-                <label><input type="radio" name="q5" value="B"> 10 dager</label><br>
-                <label><input type="radio" name="q5" value="C"> 15 dager</label><br>
-                <label><input type="radio" name="q5" value="D"> 20 dager</label>
-            </div>
-            <div class="question">
-                <h3>I arbeidsmiljøloven § 13-1 står det at direkte og indirekte diskriminering på grunn av politisk syn, medlemskap i arbeidstakerorganisasjon eller alder er forbudt. Hvilket av følgende er også forbudt?</h3>
-                <label><input type="radio" name="q6" value="A"> Diskriminering på grunn av kjønn</label><br>
-                <label><input type="radio" name="q6" value="B"> Diskriminering på grunn av etnisitet</label><br>
-                <label><input type="radio" name="q6" value="C"> Diskriminering på grunn av seksuell orientering</label><br>
-                <label><input type="radio" name="q6" value="D"> Alle de ovennevnte</label>
-            </div>
-            <div class="question">
-                <h3>I arbeidsmiljøloven § 13-3 står det at forskjellsbehandling som har et saklig formål, ikke er uforholdsmessig inngripende og er nødvendig for utøvelse av arbeid eller yrke, anses ikke som diskriminering. Hvilket av følgende er IKKE en betingelse for lovlig forskjellsbehandling?</h3>
-                <label><input type="radio" name="q7" value="A"> Saklig formål</label><br>
-                <label><input type="radio" name="q7" value="B"> Nødvendig for utøvelse av arbeid</label><br>
-                <label><input type="radio" name="q7" value="C"> Uforholdsmessig inngripende</label><br>
-                <label><input type="radio" name="q7" value="D"> Rimelig forhold mellom mål og middel</label>
-            </div>
-            <div class="question">
-                <h3>Hva er kravet til opprettelse av arbeidsmiljøutvalg ifølge arbeidsmiljøloven § 7-1 etter endringen som trådte i kraft 1. januar 2024?</h3>
-                <label><input type="radio" name="q8" value="A"> Bedrifter med minst 20 ansatte</label><br>
-                <label><input type="radio" name="q8" value="B"> Bedrifter med minst 30 ansatte</label><br>
-                <label><input type="radio" name="q8" value="C"> Bedrifter med minst 40 ansatte</label><br>
-                <label><input type="radio" name="q8" value="D"> Bedrifter med minst 50 ansatte</label>
-            </div>
-            <div class="question">
-                <h3>I arbeidsmiljøloven § 7-2 står det at arbeidsmiljøutvalget skal arbeide for et fullt forsvarlig arbeidsmiljø. Hvilket av følgende er IKKE en oppgave for arbeidsmiljøutvalget?</h3>
-                <label><input type="radio" name="q9" value="A"> Å gi ansatte høyere lønn</label><br>
-                <label><input type="radio" name="q9" value="B"> Å overvåke arbeidsmiljøet</label><br>
-                <label><input type="radio" name="q9" value="C"> Å delta i planlegging av verne- og miljøarbeid</label><br>
-                <label><input type="radio" name="q9" value="D"> Å behandle spørsmål om helse, miljø og sikkerhet</label>
-            </div>
-            <div class="question">
-                <h3>I arbeidsmiljøloven § 3-1 står det at arbeidsgiver skal sørge for systematisk helse-, miljø- og sikkerhetsarbeid. Hvilket av følgende er IKKE en del av dette arbeidet?</h3>
-                <label><input type="radio" name="q10" value="A"> Kartlegging av farer og problemer</label><br>
-                <label><input type="radio" name="q10" value="B"> Utarbeidelse av handlingsplaner</label><br>
-                <label><input type="radio" name="q10" value="C"> Tilby gratis lunsj til ansatte</label><br>
-                <label><input type="radio" name="q10" value="D"> Gjennomføring av tiltak for å redusere risiko</label>
-            </div>
-            <div class="question">
-                <h3>Ifølge arbeidsmiljøloven § 3-5, hvem skal arbeidsgiver gi opplæring i HMS?</h3>
-                <label><input type="radio" name="q11" value="A"> Alle ansatte</label><br>
-                <label><input type="radio" name="q11" value="B"> Ledere og verneombud</label><br>
-                <label><input type="radio" name="q11" value="C"> Nyansatte</label><br>
-                <label><input type="radio" name="q11" value="D"> Midlertidige ansatte</label>
-            </div>
-            <div class="question">
-                <h3>Hva defineres som trakassering ifølge arbeidsmiljøloven § 4-3 tredje ledd?</h3>
-                <label><input type="radio" name="q12" value="A"> Handlinger som har som formål eller virkning å være krenkende, skremmende, fiendtlige, nedverdigende eller ydmykende</label><br>
-                <label><input type="radio" name="q12" value="B"> Handlinger som har som formål å være morsomme</label><br>
-                <label><input type="radio" name="q12" value="C"> Handlinger som har som formål å være hjelpsomme</label><br>
-                <label><input type="radio" name="q12" value="D"> Handlinger som har som formål å være vennlige</label>
-            </div>
-            <div class="question">
-                <h3>Hva er arbeidsgivers plikt ved mistanke om trakassering ifølge arbeidsmiljøloven?</h3>
-                <label><input type="radio" name="q13" value="A"> Å ignorere problemet</label><br>
-                <label><input type="radio" name="q13" value="B"> Å undersøke og håndtere saken</label><br>
-                <label><input type="radio" name="q13" value="C"> Å gi den mistenkte høyere lønn</label><br>
-                <label><input type="radio" name="q13" value="D"> Å redusere arbeidstiden</label>
-            </div>
-            <div class="question">
-                <h3>Hva er hovedregelen for ansettelse i staten ifølge statsansatteloven?</h3>
-                <label><input type="radio" name="q14" value="A"> Fast ansettelse</label><br>
-                <label><input type="radio" name="q14" value="B"> Midlertidig ansettelse</label><br>
-                <label><input type="radio" name="q14" value="C"> Ansettelse på prøve</label><br>
-                <label><input type="radio" name="q14" value="D"> Ansettelse på deltid</label>
-            </div>
-            <div class="question">
-                <h3>Hva er maksimal varighet for midlertidig ansettelse før arbeidstaker har krav på fast ansettelse ifølge statsansatteloven?</h3>
-                <label><input type="radio" name="q15" value="A"> 1 år</label><br>
-                <label><input type="radio" name="q15" value="B"> 2 år</label><br>
-                <label><input type="radio" name="q15" value="C"> 3 år</label><br>
-                <label><input type="radio" name="q15" value="D"> 4 år</label>
-            </div>
-            <div class="question">
-                <h3>Hva skal en arbeidsavtale minst omfatte ifølge arbeidsmiljøloven § 14-6?</h3>
-                <label><input type="radio" name="q16" value="A"> Lønn og arbeidstid</label><br>
-                <label><input type="radio" name="q16" value="B"> Arbeidsoppgaver og arbeidssted</label><br>
-                <label><input type="radio" name="q16" value="C"> Varighet av arbeidsforholdet</label><br>
-                <label><input type="radio" name="q16" value="D"> Alle de ovennevnte</label>
-            </div>
-            <div class="question">
-                <h3>Når skal en skriftlig arbeidsavtale foreligge ifølge arbeidsmiljøloven § 14-5?</h3>
-                <label><input type="radio" name="q17" value="A"> Snarest mulig og senest én måned etter at arbeidsforholdet begynte</label><br>
-                <label><input type="radio" name="q17" value="B"> Snarest mulig og senest tre måneder etter at arbeidsforholdet begynte</label><br>
-                <label><input type="radio" name="q17" value="C"> Snarest mulig og senest seks måneder etter at arbeidsforholdet begynte</label><br>
-                <label><input type="radio" name="q17" value="D"> Snarest mulig og senest ett år etter at arbeidsforholdet begynte</label>
-            </div>
-            <div class="question">
-                <h3>Hva er en arbeidstakers reservasjonsrett ved virksomhetsoverdragelse ifølge arbeidsmiljøloven § 16-3?</h3>
-                <label><input type="radio" name="q18" value="A"> Retten til å motsette seg at arbeidsforholdet overføres til ny arbeidsgiver</label><br>
-                <label><input type="radio" name="q18" value="B"> Retten til å kreve høyere lønn</label><br>
-                <label><input type="radio" name="q18" value="C"> Retten til å redusere arbeidstiden</label><br>
-                <label><input type="radio" name="q18" value="D"> Retten til å få gratis lunsj</label>
-            </div>
-            <div class="question">
-                <h3>Hva er fristen for å utøve reservasjonsretten ved virksomhetsoverdragelse ifølge arbeidsmiljøloven § 16-3?</h3>
-                <label><input type="radio" name="q19" value="A"> 7 dager</label><br>
-                <label><input type="radio" name="q19" value="B"> 14 dager</label><br>
-                <label><input type="radio" name="q19" value="C"> 21 dager</label><br>
-                <label><input type="radio" name="q19" value="D"> 30 dager</label>
-            </div>
-            <div class="question">
-                <h3>Hva er arbeidsgivers plikt ved virksomhetsoverdragelse ifølge arbeidsmiljøloven § 16-2?</h3>
-                <label><input type="radio" name="q20" value="A"> Å informere arbeidstakerne om overdragelsen</label><br>
-                <label><input type="radio" name="q20" value="B"> Å gi arbeidstakerne høyere lønn</label><br>
-                <label><input type="radio" name="q20" value="C"> Å redusere arbeidstakernes arbeidstid</label><br>
-                <label><input type="radio" name="q20" value="D"> Å tilby gratis lunsj</label>
-            </div>
-            <div class="question">
-                <h3>Hva er definisjonen av utleie av arbeidstakere ifølge arbeidsmarkedsloven?</h3>
-                <label><input type="radio" name="q21" value="A"> Leie av arbeidstakere fra en arbeidsgiver til en oppdragsgiver der de innleide er underlagt oppdragsgivers ledelse</label><br>
-                <label><input type="radio" name="q21" value="B"> Leie av arbeidstakere fra en arbeidsgiver til en oppdragsgiver der de innleide er underlagt arbeidsgivers ledelse</label><br>
-                <label><input type="radio" name="q21" value="C"> Leie av arbeidstakere fra en oppdragsgiver til en arbeidsgiver der de innleide er underlagt oppdragsgivers ledelse</label><br>
-                <label><input type="radio" name="q21" value="D"> Leie av arbeidstakere fra en oppdragsgiver til en arbeidsgiver der de innleide er underlagt arbeidsgivers ledelse</label>
-            </div>
-            <div class="question">
-                <h3>Hva er hovedregelen for innleie av arbeidstakere ifølge statsansatteloven?</h3>
-                <label><input type="radio" name="q22" value="A"> Innleie er tillatt for en begrenset periode</label><br>
-                <label><input type="radio" name="q22" value="B"> Innleie er tillatt for en ubegrenset periode</label><br>
-                <label><input type="radio" name="q22" value="C"> Innleie er ikke tillatt</label><br>
-                <label><input type="radio" name="q22" value="D"> Innleie er tillatt uten restriksjoner</label>
-            </div>
-            <div class="question">
-                <h3>Hva er vikarbyrådirektivets prinsipp om likebehandling ved utleie fra bemanningsforetak?</h3>
-                <label><input type="radio" name="q23" value="A"> Utleid arbeidstaker skal minst sikres de vilkår som ville kommet til anvendelse dersom arbeidstaker hadde vært ansatt hos innleier for å utføre samme arbeid</label><br>
-                <label><input type="radio" name="q23" value="B"> Utleid arbeidstaker skal sikres høyere lønn enn innleiers ansatte</label><br>
-                <label><input type="radio" name="q23" value="C"> Utleid arbeidstaker skal sikres kortere arbeidstid enn innleiers ansatte</label><br>
-                <label><input type="radio" name="q23" value="D"> Utleid arbeidstaker skal sikres lengre pauser enn innleiers ansatte</label>
-            </div>
-            <div class="question">
-                <h3>Hva er hovedregelen for oppsigelse av arbeidsforhold ifølge arbeidsmiljøloven § 15-7?</h3>
-                <label><input type="radio" name="q24" value="A"> Oppsigelse må være saklig begrunnet</label><br>
-                <label><input type="radio" name="q24" value="B"> Oppsigelse kan skje uten begrunnelse</label><br>
-                <label><input type="radio" name="q24" value="C"> Oppsigelse må begrunnes med økonomiske årsaker</label><br>
-                <label><input type="radio" name="q24" value="D"> Oppsigelse må begrunnes med personlige årsaker</label>
-            </div>
-            <button class="submit-btn" type="submit">Send inn svar</button>
-        </form>
+        <p>Trykk på start-knappen for å begynne quizen.</p>
+        <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <div id="question-container" class="hidden">
+        <div class="progress">
+            Spørsmål <span id="current-question">1</span> av <span id="total-questions">0</span>
+        </div>
+        <div id="question" class="question"></div>
+        <div id="answers"></div>
+        <button class="next-btn hidden" id="next-btn" onclick="showNextQuestion()">Neste spørsmål</button>
+        <button class="submit-btn hidden" id="submit-btn" onclick="submitQuiz()">Send inn svar</button>
     </div>
 
     <div class="profile-section hidden" id="profile-section">
         <h2>Din Profil</h2>
         <p>Poeng: <span id="user-score">0</span></p>
-        <p>Badges:</p>
-        <ul id="user-badges"></ul>
-    </div>
-
-    <div class="leaderboard-section hidden" id="leaderboard-section">
-        <h2>Leaderboard</h2>
-        <ol id="leaderboard">
-            <!-- Leaderboard entries will be added here -->
-        </ol>
-    </div>
-
-    <div class="feedback-section hidden" id="feedback-section">
-        <h2>Gi tilbakemelding</h2>
-        <form id="feedback-form">
-            <label for="feedback">Din tilbakemelding:</label>
-            <textarea id="feedback" name="feedback" rows="4" cols="50"></textarea>
-            <button type="submit">Send</button>
-        </form>
     </div>
 </div>
 
@@ -285,45 +115,288 @@
 </footer>
 
 <script>
-    document.getElementById('quiz-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        let score = 0;
-        const answers = {
-            q1: 'B',
-            q2: 'A',
-            q3: 'B',
-            q4: 'C',
-            q5: 'B',
-            q6: 'D',
-            q7: 'C',
-            q8: 'B',
-            q9: 'A',
-            q10: 'C',
-            q11: 'B',
-            q12: 'A',
-            q13: 'B',
-            q14: 'A',
-            q15: 'C',
-            q16: 'D',
-            q17: 'A',
-            q18: 'A',
-            q19: 'B',
-            q20: 'A',
-            q21: 'A',
-            q22: 'A',
-            q23: 'A',
-            q24: 'A'
-        };
-        for (const [key, value] of Object.entries(answers)) {
-            const userAnswer = document.querySelector(`input[name="${key}"]:checked`);
-            if (userAnswer && userAnswer.value === value) {
-                score++;
-            }
+    const questions = [
+        {
+            question: "I arbeidsmiljøloven § 1-1 står det at lovens formål er å sikre et arbeidsmiljø som gir grunnlag for en helsefremmende og meningsfylt arbeidssituasjon. Hvilket av følgende er IKKE nevnt som en del av formålet?",
+            answers: [
+                { text: "Full trygghet mot fysiske og psykiske skadevirkninger", correct: false },
+                { text: "En arbeidsplass med høy lønn", correct: true },
+                { text: "En arbeidsplass med meningsfylt arbeidssituasjon", correct: false },
+                { text: "Et inkluderende arbeidsliv", correct: false }
+            ]
+        },
+        {
+            question: "I arbeidsmiljøloven § 10-6 står det at overtid skal begrenses. Hva er den maksimale tillatte overtid per uke?",
+            answers: [
+                { text: "10 timer", correct: true },
+                { text: "15 timer", correct: false },
+                { text: "20 timer", correct: false },
+                { text: "25 timer", correct: false }
+            ]
+        },
+        {
+            question: "Ifølge arbeidsmiljøloven § 10-9, hva er kravet til pauser for arbeidstakere som arbeider mer enn 5,5 timer?",
+            answers: [
+                { text: "15 minutter", correct: false },
+                { text: "30 minutter", correct: true },
+                { text: "45 minutter", correct: false },
+                { text: "60 minutter", correct: false }
+            ]
+        },
+        {
+            question: "I arbeidsmiljøloven § 12-2 reguleres svangerskapspermisjon. Hvor mange uker permisjon har en arbeidstaker rett til før fødselen?",
+            answers: [
+                { text: "2 uker", correct: false },
+                { text: "3 uker", correct: false },
+                { text: "4 uker", correct: true },
+                { text: "5 uker", correct: false }
+            ]
+        },
+        {
+            question: "Ifølge arbeidsmiljøloven § 12-9, hvor mange dager permisjon har en arbeidstaker rett til ved barns sykdom per kalenderår?",
+            answers: [
+                { text: "5 dager", correct: false },
+                { text: "10 dager", correct: true },
+                { text: "15 dager", correct: false },
+                { text: "20 dager", correct: false }
+            ]
+        },
+        {
+            question: "I arbeidsmiljøloven § 13-1 står det at direkte og indirekte diskriminering på grunn av politisk syn, medlemskap i arbeidstakerorganisasjon eller alder er forbudt. Hvilket av følgende er også forbudt?",
+            answers: [
+                { text: "Diskriminering på grunn av kjønn", correct: false },
+                { text: "Diskriminering på grunn av etnisitet", correct: false },
+                { text: "Diskriminering på grunn av seksuell orientering", correct: false },
+                { text: "Alle de ovennevnte", correct: true }
+            ]
+        },
+        {
+            question: "I arbeidsmiljøloven § 13-3 står det at forskjellsbehandling som har et saklig formål, ikke er uforholdsmessig inngripende og er nødvendig for utøvelse av arbeid eller yrke, anses ikke som diskriminering. Hvilket av følgende er IKKE en betingelse for lovlig forskjellsbehandling?",
+            answers: [
+                { text: "Saklig formål", correct: false },
+                { text: "Nødvendig for utøvelse av arbeid", correct: false },
+                { text: "Uforholdsmessig inngripende", correct: true },
+                { text: "Rimelig forhold mellom mål og middel", correct: false }
+            ]
+        },
+        {
+            question: "Hva er kravet til opprettelse av arbeidsmiljøutvalg ifølge arbeidsmiljøloven § 7-1 etter endringen som trådte i kraft 1. januar 2024?",
+            answers: [
+                { text: "Bedrifter med minst 20 ansatte", correct: false },
+                { text: "Bedrifter med minst 30 ansatte", correct: true },
+                { text: "Bedrifter med minst 40 ansatte", correct: false },
+                { text: "Bedrifter med minst 50 ansatte", correct: false }
+            ]
+        },
+        {
+            question: "I arbeidsmiljøloven § 7-2 står det at arbeidsmiljøutvalget skal arbeide for et fullt forsvarlig arbeidsmiljø. Hvilket av følgende er IKKE en oppgave for arbeidsmiljøutvalget?",
+            answers: [
+                { text: "Å gi ansatte høyere lønn", correct: true },
+                { text: "Å overvåke arbeidsmiljøet", correct: false },
+                { text: "Å delta i planlegging av verne- og miljøarbeid", correct: false },
+                { text: "Å behandle spørsmål om helse, miljø og sikkerhet", correct: false }
+            ]
+        },
+        {
+            question: "I arbeidsmiljøloven § 3-1 står det at arbeidsgiver skal sørge for systematisk helse-, miljø- og sikkerhetsarbeid. Hvilket av følgende er IKKE en del av dette arbeidet?",
+            answers: [
+                { text: "Kartlegging av farer og problemer", correct: false },
+                { text: "Utarbeidelse av handlingsplaner", correct: false },
+                { text: "Tilby gratis lunsj til ansatte", correct: true },
+                { text: "Gjennomføring av tiltak for å redusere risiko", correct: false }
+            ]
+        },
+        {
+            question: "Ifølge arbeidsmiljøloven § 3-5, hvem skal arbeidsgiver gi opplæring i HMS?",
+            answers: [
+                { text: "Alle ansatte", correct: false },
+                { text: "Ledere og verneombud", correct: true },
+                { text: "Nyansatte", correct: false },
+                { text: "Midlertidige ansatte", correct: false }
+            ]
+        },
+        {
+            question: "Hva defineres som trakassering ifølge arbeidsmiljøloven § 4-3 tredje ledd?",
+            answers: [
+                { text: "Handlinger som har som formål eller virkning å være krenkende, skremmende, fiendtlige, nedverdigende eller ydmykende", correct: true },
+                { text: "Handlinger som har som formål å være morsomme", correct: false },
+                { text: "Handlinger som har som formål å være hjelpsomme", correct: false },
+                { text: "Handlinger som har som formål å være vennlige", correct: false }
+            ]
+        },
+        {
+            question: "Hva er arbeidsgivers plikt ved mistanke om trakassering ifølge arbeidsmiljøloven?",
+            answers: [
+                { text: "Å ignorere problemet", correct: false },
+                { text: "Å undersøke og håndtere saken", correct: true },
+                { text: "Å gi den mistenkte høyere lønn", correct: false },
+                { text: "Å redusere arbeidstiden", correct: false }
+            ]
+        },
+        {
+            question: "Hva er hovedregelen for ansettelse i staten ifølge statsansatteloven?",
+            answers: [
+                { text: "Fast ansettelse", correct: true },
+                { text: "Midlertidig ansettelse", correct: false },
+                { text: "Ansettelse på prøve", correct: false },
+                { text: "Ansettelse på deltid", correct: false }
+            ]
+        },
+        {
+            question: "Hva er maksimal varighet for midlertidig ansettelse før arbeidstaker har krav på fast ansettelse ifølge statsansatteloven?",
+            answers: [
+                { text: "1 år", correct: false },
+                { text: "2 år", correct: false },
+                { text: "3 år", correct: true },
+                { text: "4 år", correct: false }
+            ]
+        },
+        {
+            question: "Hva skal en arbeidsavtale minst omfatte ifølge arbeidsmiljøloven § 14-6?",
+            answers: [
+                { text: "Lønn og arbeidstid", correct: false },
+                { text: "Arbeidsoppgaver og arbeidssted", correct: false },
+                { text: "Varighet av arbeidsforholdet", correct: false },
+                { text: "Alle de ovennevnte", correct: true }
+            ]
+        },
+        {
+            question: "Når skal en skriftlig arbeidsavtale foreligge ifølge arbeidsmiljøloven § 14-5?",
+            answers: [
+                { text: "Snarest mulig og senest én måned etter at arbeidsforholdet begynte", correct: true },
+                { text: "Snarest mulig og senest tre måneder etter at arbeidsforholdet begynte", correct: false },
+                { text: "Snarest mulig og senest seks måneder etter at arbeidsforholdet begynte", correct: false },
+                { text: "Snarest mulig og senest ett år etter at arbeidsforholdet begynte", correct: false }
+            ]
+        },
+        {
+            question: "Hva er en arbeidstakers reservasjonsrett ved virksomhetsoverdragelse ifølge arbeidsmiljøloven § 16-3?",
+            answers: [
+                { text: "Retten til å motsette seg at arbeidsforholdet overføres til ny arbeidsgiver", correct: true },
+                { text: "Retten til å kreve høyere lønn", correct: false },
+                { text: "Retten til å redusere arbeidstiden", correct: false },
+                { text: "Retten til å få gratis lunsj", correct: false }
+            ]
+        },
+        {
+            question: "Hva er fristen for å utøve reservasjonsretten ved virksomhetsoverdragelse ifølge arbeidsmiljøloven § 16-3?",
+            answers: [
+                { text: "7 dager", correct: false },
+                { text: "14 dager", correct: true },
+                { text: "21 dager", correct: false },
+                { text: "30 dager", correct: false }
+            ]
+        },
+        {
+            question: "Hva er arbeidsgivers plikt ved virksomhetsoverdragelse ifølge arbeidsmiljøloven § 16-2?",
+            answers: [
+                { text: "Å informere arbeidstakerne om overdragelsen", correct: true },
+                { text: "Å gi arbeidstakerne høyere lønn", correct: false },
+                { text: "Å redusere arbeidstakernes arbeidstid", correct: false },
+                { text: "Å tilby gratis lunsj", correct: false }
+            ]
+        },
+        {
+            question: "Hva er definisjonen av utleie av arbeidstakere ifølge arbeidsmarkedsloven?",
+            answers: [
+                { text: "Leie av arbeidstakere fra en arbeidsgiver til en oppdragsgiver der de innleide er underlagt oppdragsgivers ledelse", correct: true },
+                { text: "Leie av arbeidstakere fra en arbeidsgiver til en oppdragsgiver der de innleide er underlagt arbeidsgivers ledelse", correct: false },
+                { text: "Leie av arbeidstakere fra en oppdragsgiver til en arbeidsgiver der de innleide er underlagt oppdragsgivers ledelse", correct: false },
+                { text: "Leie av arbeidstakere fra en oppdragsgiver til en arbeidsgiver der de innleide er underlagt arbeidsgivers ledelse", correct: false }
+            ]
+        },
+        {
+            question: "Hva er hovedregelen for innleie av arbeidstakere ifølge statsansatteloven?",
+            answers: [
+                { text: "Innleie er tillatt for en begrenset periode", correct: true },
+                { text: "Innleie er tillatt for en ubegrenset periode", correct: false },
+                { text: "Innleie er ikke tillatt", correct: false },
+                { text: "Innleie er tillatt uten restriksjoner", correct: false }
+            ]
+        },
+        {
+            question: "Hva er vikarbyrådirektivets prinsipp om likebehandling ved utleie fra bemanningsforetak?",
+            answers: [
+                { text: "Utleid arbeidstaker skal minst sikres de vilkår som ville kommet til anvendelse dersom arbeidstaker hadde vært ansatt hos innleier for å utføre samme arbeid", correct: true },
+                { text: "Utleid arbeidstaker skal sikres høyere lønn enn innleiers ansatte", correct: false },
+                { text: "Utleid arbeidstaker skal sikres kortere arbeidstid enn innleiers ansatte", correct: false },
+                { text: "Utleid arbeidstaker skal sikres lengre pauser enn innleiers ansatte", correct: false }
+            ]
+        },
+        {
+            question: "Hva er hovedregelen for oppsigelse av arbeidsforhold ifølge arbeidsmiljøloven § 15-7?",
+            answers: [
+                { text: "Oppsigelse må være saklig begrunnet", correct: true },
+                { text: "Oppsigelse kan skje uten begrunnelse", correct: false },
+                { text: "Oppsigelse må begrunnes med økonomiske årsaker", correct: false },
+                { text: "Oppsigelse må begrunnes med personlige årsaker", correct: false }
+            ]
         }
-        alert(`Du fikk ${score} poeng av 24!`);
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function startQuiz() {
+        document.querySelector('.quiz-section').classList.add('hidden');
+        document.getElementById('question-container').classList.remove('hidden');
+        document.getElementById('total-questions').textContent = questions.length;
+        showQuestion(questions[currentQuestionIndex]);
+    }
+
+    function showQuestion(question) {
+        const questionElement = document.getElementById('question');
+        const answersElement = document.getElementById('answers');
+        document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+
+        questionElement.innerHTML = `<h3>${question.question}</h3>`;
+        answersElement.innerHTML = '';
+
+        question.answers.forEach((answer, index) => {
+            const button = document.createElement('button');
+            button.classList.add('answer');
+            button.textContent = answer.text;
+            button.onclick = () => selectAnswer(answer, button);
+            answersElement.appendChild(button);
+        });
+
+        document.getElementById('next-btn').classList.add('hidden');
+        document.getElementById('submit-btn').classList.add('hidden');
+    }
+
+    function selectAnswer(answer, button) {
+        const answers = document.querySelectorAll('.answer');
+        answers.forEach(btn => {
+            btn.disabled = true;
+            if (btn === button) {
+                btn.classList.add(answer.correct ? 'correct' : 'incorrect');
+            } else if (answer.correct && btn.textContent === answer.text) {
+                btn.classList.add('correct');
+            }
+        });
+
+        if (answer.correct) {
+            score++;
+        }
+
+        if (currentQuestionIndex < questions.length - 1) {
+            document.getElementById('next-btn').classList.remove('hidden');
+        } else {
+            document.getElementById('submit-btn').classList.remove('hidden');
+        }
+    }
+
+    function showNextQuestion() {
+        currentQuestionIndex++;
+        showQuestion(questions[currentQuestionIndex]);
+    }
+
+    function submitQuiz() {
+        alert(`Du fikk ${score} poeng av ${questions.length}!`);
         document.getElementById('user-score').textContent = score;
         document.getElementById('profile-section').classList.remove('hidden');
-    });
+        document.getElementById('question-container').classList.add('hidden');
+    }
 </script>
 
 </body>
