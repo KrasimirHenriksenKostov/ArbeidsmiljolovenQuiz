@@ -135,16 +135,11 @@
             transition: width 0.3s;
         }
         .quiz-image {
-            max-width: 100px;
+            max-width: 100%;
             border-radius: 8px;
             margin-bottom: 20px;
             position: absolute;
             top: 20px;
-        }
-        .quiz-image-left {
-            left: 20px;
-        }
-        .quiz-image-right {
             right: 20px;
         }
     </style>
@@ -153,8 +148,7 @@
 
 <header>
     <h1>Velkommen til QuizMaster</h1>
-    <img src="data:image/webp;base64,{base64_encoded_image}" alt="QuizMaster" class="quiz-image quiz-image-left">
-    <img src="data:image/webp;base64,{base64_encoded_image}" alt="QuizMaster" class="quiz-image quiz-image-right">
+    <img src="data:image/webp;base64,UklGRiIAAABXRUJQVlA4IC4AAADwADeFWDuEYpziq2lJBNiwiHjz/1QBAf+xA+OIHAA==" alt="QuizMaster" class="quiz-image">
 </header>
 
 <div class="container">
@@ -176,6 +170,7 @@
         <div class="progress-bar">
             <div class="progress-bar-inner" id="progress-bar-inner"></div>
         </div>
+        <div id="timer">Tid brukt: <span id="time-used">0</span> sekunder</div>
         <div id="question" class="question"></div>
         <div id="answers"></div>
         <button class="next-btn hidden" id="next-btn" onclick="showNextQuestion()">Neste spørsmål</button>
@@ -185,10 +180,12 @@
     <div class="profile-section hidden" id="profile-section">
         <h2>Din Profil</h2>
         <p>Poeng: <span id="user-score">0</span></p>
+        <p>Tid brukt: <span id="total-time">0</span> sekunder</p>
+        <div id="detailed-results"></div>
         <button onclick="restartQuiz()">Start på nytt</button>
         <button class="theme-btn" onclick="toggleTheme()">Bytt tema</button>
         <button class="share-btn" onclick="shareResult()">Del resultat</button>
-        <button class="feedback-btn" onclick="giveFeedback()">Gi tilbakemelding</button>
+        <button class="feedback-btn" onclick="provideFeedback()">Gi tilbakemelding</button>
     </div>
 </div>
 
@@ -394,7 +391,7 @@
     const leaderboard = [];
     let userName = '';
     let theme = 'light';
-    let startTime;
+    let startTime = null;
 
     function setUserName() {
         userName = document.getElementById('username').value;
@@ -413,6 +410,7 @@
         currentQuestionIndex = 0;
         score = 0;
         startTime = new Date();
+        updateTimer();
         showQuestion(questions[currentQuestionIndex]);
     }
 
@@ -474,39 +472,31 @@
 
     function submitQuiz() {
         const endTime = new Date();
-        const timeTaken = Math.round((endTime - startTime) / 1000); // in seconds
+        const timeUsed = Math.round((endTime - startTime) / 1000);
         const message = score >= 80 ? 'Gratulerer! Du har bestått quizen!' : 'Du har ikke bestått quizen. Prøv igjen!';
-        alert(`Du fikk ${score} poeng på ${timeTaken} sekunder! ${message}`);
+        alert(`Du fikk ${score} poeng! ${message}`);
         document.getElementById('user-score').textContent = score;
-        leaderboard.push({ name: userName, score: score, time: timeTaken });
+        document.getElementById('total-time').textContent = timeUsed;
+        displayDetailedResults();
+        leaderboard.push({ name: userName, score: score, time: timeUsed });
         updateLeaderboard();
-        showDetailedResults();
         document.getElementById('profile-section').classList.remove('hidden');
         document.getElementById('question-container').classList.add('hidden');
     }
 
-    function showDetailedResults() {
-        const resultsContainer = document.createElement('div');
-        resultsContainer.innerHTML = '<h2>Dine resultater</h2>';
+    function displayDetailedResults() {
+        const detailedResultsElement = document.getElementById('detailed-results');
+        detailedResultsElement.innerHTML = '<h3>Detaljerte resultater:</h3>';
         questions.forEach((question, index) => {
-            const questionResult = document.createElement('div');
-            questionResult.innerHTML = `<p><strong>Spørsmål ${index + 1}:</strong> ${question.question}</p>`;
-            question.answers.forEach(answer => {
-                const answerElement = document.createElement('div');
-                answerElement.textContent = answer.text;
-                if (answer.correct) {
-                    answerElement.style.fontWeight = 'bold';
-                }
-                if (document.querySelectorAll('.answer')[index] && document.querySelectorAll('.answer')[index].classList.contains('correct')) {
-                    answerElement.style.color = 'green';
-                } else if (document.querySelectorAll('.answer')[index] && document.querySelectorAll('.answer')[index].classList.contains('incorrect')) {
-                    answerElement.style.color = 'red';
-                }
-                questionResult.appendChild(answerElement);
-            });
-            resultsContainer.appendChild(questionResult);
+            const userAnswer = document.querySelectorAll('.answer')[index].innerText;
+            const correctAnswer = question.answers.find(answer => answer.correct).text;
+            const isCorrect = userAnswer === correctAnswer;
+            detailedResultsElement.innerHTML += `
+                <p>${index + 1}. ${question.question}</p>
+                <p>Ditt svar: ${userAnswer} - ${isCorrect ? 'Riktig' : 'Feil'}</p>
+                ${!isCorrect ? `<p>Riktig svar: ${correctAnswer}</p>` : ''}
+            `;
         });
-        document.getElementById('profile-section').appendChild(resultsContainer);
     }
 
     function updateLeaderboard() {
@@ -544,20 +534,24 @@
         const resultMessage = `Jeg har oppnådd ${score} poeng på QuizMaster! Prøv selv og se om du kan slå min score!`;
         const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(resultMessage)}`;
         const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(resultMessage)}`;
-        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(resultMessage)}`;
         const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(resultMessage)}`;
         window.open(linkedinUrl, '_blank');
         window.open(facebookUrl, '_blank');
-        window.open(twitterUrl, '_blank');
         window.open(whatsappUrl, '_blank');
     }
 
-    function giveFeedback() {
-        const feedback = prompt('Vennligst gi oss din tilbakemelding:');
+    function provideFeedback() {
+        const feedback = prompt("Gi oss din tilbakemelding:");
         if (feedback) {
-            alert('Takk for din tilbakemelding!');
-            // Send feedback to the server or process it as needed
+            alert("Takk for din tilbakemelding!");
         }
+    }
+
+    function updateTimer() {
+        const timerElement = document.getElementById('time-used');
+        const timeUsed = Math.round((new Date() - startTime) / 1000);
+        timerElement.textContent = timeUsed;
+        setTimeout(updateTimer, 1000);
     }
 </script>
 
