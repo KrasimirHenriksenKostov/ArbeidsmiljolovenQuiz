@@ -24,6 +24,7 @@
             padding: 20px;
             text-align: center;
             width: 100%;
+            position: relative;
         }
         .container {
             background: white;
@@ -134,24 +135,21 @@
             width: 0;
             transition: width 0.3s;
         }
-        .quiz-image-left, .quiz-image-right {
-            max-width: 100%;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            position: absolute;
-            top: 20px;
-            width: 100px;
-        }
-        .quiz-image-left {
-            left: 20px;
-        }
-        .quiz-image-right {
-            right: 20px;
-        }
 
         @media (max-width: 600px) {
-            .quiz-image-left, .quiz-image-right {
-                display: none;
+            #leaderboard {
+                top: 10px;
+                right: 10px;
+                padding: 5px;
+                font-size: 12px;
+            }
+            .start-btn, .next-btn, .submit-btn, .theme-btn, .share-btn, .feedback-btn {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+            .answer {
+                font-size: 12px;
+                padding: 8px;
             }
         }
     </style>
@@ -200,14 +198,13 @@
     </div>
 </div>
 
-<div id="leaderboard" class="hidden">
+<div id="leaderboard">
     <h3>Leaderboard</h3>
     <ol id="leaderboard-list"></ol>
 </div>
 
 <footer>
-    <p>&copy; 2024 QuizMaster. Alle rettigheter reservert.</p>
-    <p>Quizen er laget av Krasimir Henriksen Kostov. Feedback: <a href="https://www.linkedin.com/in/krasimir-henriksen-kostov" target="_blank">www.linkedin.com/in/krasimir-henriksen-kostov</a></p>
+    <p>&copy; 2024 QuizMaster. Alle rettigheter reservert. Quizen er laget av Krasimir Henriksen Kostov. Gjerne gi en feedback på min <a href="https://www.linkedin.com/in/krasimir-henriksen-kostov" target="_blank">LinkedIn profil</a>.</p>
 </footer>
 
 <audio id="correct-sound" src="correct-sound.mp3"></audio>
@@ -466,11 +463,7 @@
             document.getElementById('incorrect-sound').play();
         }
 
-        if (currentQuestionIndex < questions.length - 1) {
-            document.getElementById('next-btn').classList.remove('hidden');
-        } else {
-            document.getElementById('submit-btn').classList.remove('hidden');
-        }
+        document.getElementById('next-btn').classList.remove('hidden');
     }
 
     function showNextQuestion() {
@@ -520,13 +513,11 @@
             li.textContent = `${entry.name}: ${entry.score} poeng på ${entry.time} sekunder`;
             leaderboardList.appendChild(li);
         });
-        document.getElementById('leaderboard').classList.remove('hidden');
     }
 
     function restartQuiz() {
         document.getElementById('quiz-section').classList.remove('hidden');
         document.getElementById('profile-section').classList.add('hidden');
-        document.getElementById('leaderboard').classList.add('hidden');
         document.getElementById('name-input').classList.remove('hidden');
     }
 
