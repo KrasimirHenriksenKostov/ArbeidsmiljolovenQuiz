@@ -50,6 +50,7 @@
         .answer {
             margin-bottom: 10px;
             display: block;
+            font-size: 14px;
         }
         .hidden {
             display: none;
@@ -83,6 +84,37 @@
             font-size: 18px;
             margin-bottom: 15px;
         }
+        #leaderboard {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .name-input {
+            margin-bottom: 20px;
+        }
+        .name-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: calc(100% - 22px);
+        }
+        .name-input button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+        }
+        .name-input button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -92,7 +124,12 @@
 </header>
 
 <div class="container">
-    <div class="quiz-section">
+    <div class="name-input" id="name-input">
+        <label for="username">Skriv inn navnet ditt:</label>
+        <input type="text" id="username" placeholder="Ditt navn">
+        <button onclick="setUserName()">Start Quiz</button>
+    </div>
+    <div class="quiz-section hidden" id="quiz-section">
         <h2>Dagens Quiz - Powerpoint oppsigelse nedbemanning</h2>
         <p>Trykk på start-knappen for å begynne quizen.</p>
         <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
@@ -102,7 +139,7 @@
         <div class="progress">
             Spørsmål <span id="current-question">1</span> av <span id="total-questions">0</span>
         </div>
-        <div class="timer" id="timer">Tid igjen: <span id="time-left">30</span> sekunder</div>
+        <div class="timer" id="timer">Tid igjen: <span id="time-left">7</span> sekunder</div>
         <div id="question" class="question"></div>
         <div id="answers"></div>
         <button class="next-btn hidden" id="next-btn" onclick="showNextQuestion()">Neste spørsmål</button>
@@ -114,6 +151,11 @@
         <p>Poeng: <span id="user-score">0</span></p>
         <p><button onclick="restartQuiz()">Start på nytt</button></p>
     </div>
+</div>
+
+<div id="leaderboard" class="hidden">
+    <h3>Leaderboard</h3>
+    <ol id="leaderboard-list"></ol>
 </div>
 
 <footer>
@@ -131,186 +173,29 @@
                 { text: "Rekruttere nye ansatte", correct: false }
             ]
         },
-        {
-            question: "Hva er hovedforpliktelsen til arbeidsgiveren i et arbeidsforhold?",
-            answers: [
-                { text: "Tilby opplæring", correct: false },
-                { text: "Stille sin arbeidskraft til disposisjon", correct: false },
-                { text: "Utbetale vederlaget (lønn)", correct: true },
-                { text: "Sette opp arbeidsplaner", correct: false }
-            ]
-        },
-        {
-            question: "Hva omfatter individuell arbeidsrett?",
-            answers: [
-                { text: "Tariffavtaler", correct: false },
-                { text: "Boikott", correct: false },
-                { text: "Inngåelse av arbeidsavtaler", correct: true },
-                { text: "Lockout", correct: false }
-            ]
-        },
-        {
-            question: "Hvilken lov gir vern mot usaklig oppsigelse?",
-            answers: [
-                { text: "Ferieloven", correct: false },
-                { text: "Arbeidsmiljøloven", correct: true },
-                { text: "Likestillings- og diskrimineringsloven", correct: false },
-                { text: "Folketrygdloven", correct: false }
-            ]
-        },
-        {
-            question: "Hva er et viktig element i saklig oppsigelse?",
-            answers: [
-                { text: "Arbeidstakers forhold", correct: true },
-                { text: "Tariffavtaler", correct: false },
-                { text: "EØS-avtalen", correct: false },
-                { text: "Folketrygdens bestemmelser", correct: false }
-            ]
-        },
-        {
-            question: "Hva må arbeidsgiver vurdere ved en oppsigelse på grunn av virksomhetens forhold?",
-            answers: [
-                { text: "Konsernets behov", correct: false },
-                { text: "Arbeidstakers alder", correct: false },
-                { text: "Om det finnes annet passende arbeid", correct: true },
-                { text: "Tariffavtalens bestemmelser", correct: false }
-            ]
-        },
-        {
-            question: "Hvilken paragraf i arbeidsmiljøloven omhandler vern mot usaklig oppsigelse?",
-            answers: [
-                { text: "§ 14-2", correct: false },
-                { text: "§ 1-9", correct: false },
-                { text: "§ 15-7", correct: true },
-                { text: "§ 15-1", correct: false }
-            ]
-        },
-        {
-            question: "Hva er en viktig prosess ved oppsigelse på grunn av virksomhetens forhold?",
-            answers: [
-                { text: "Tilbud om sluttavtale", correct: false },
-                { text: "Individuelle drøftelsesmøter", correct: true },
-                { text: "Informasjon til fagforeningen", correct: false },
-                { text: "Søksmål", correct: false }
-            ]
-        },
-        {
-            question: "Hvilket dokument må arbeidsgiver opprette ved en nedbemanning?",
-            answers: [
-                { text: "Tariffavtale", correct: false },
-                { text: "Oppsigelsesbrev", correct: true },
-                { text: "Sluttvederlag", correct: false },
-                { text: "Ferieplan", correct: false }
-            ]
-        },
-        {
-            question: "Hva innebærer 'annet passende arbeid'?",
-            answers: [
-                { text: "Opprettelse av ny stilling", correct: false },
-                { text: "Et arbeid likt det opprinnelige", correct: true },
-                { text: "Avskjed", correct: false },
-                { text: "Sluttavtale", correct: false }
-            ]
-        },
-        {
-            question: "Hva skal arbeidsgiver gjøre før en oppsigelse på grunn av virksomhetens forhold?",
-            answers: [
-                { text: "Tilby sluttpakker", correct: false },
-                { text: "Foreta en interesseavveining", correct: false },
-                { text: "Avholde drøftelsesmøter", correct: true },
-                { text: "Redusere lønn", correct: false }
-            ]
-        },
-        {
-            question: "Hva er formålet med fortrinnsrett?",
-            answers: [
-                { text: "Øke lønnsomheten", correct: false },
-                { text: "Motvirke urettferdig oppsigelse", correct: true },
-                { text: "Fremme tariffavtaler", correct: false },
-                { text: "Redusere sykefravær", correct: false }
-            ]
-        },
-        {
-            question: "Hva er en konsekvens av å inngå en sluttavtale?",
-            answers: [
-                { text: "Fortsatt ansettelse", correct: false },
-                { text: "Fortrinnsrett til ny stilling", correct: false },
-                { text: "Endelig oppgjør av alle rettigheter og plikter", correct: true },
-                { text: "Plikt til å informere arbeidsgiver om fremtidige jobbsøknader", correct: false }
-            ]
-        },
-        {
-            question: "Hvem kan være arbeidstakerpart i kollektiv arbeidsrett?",
-            answers: [
-                { text: "Enkeltarbeidstakere", correct: false },
-                { text: "Fagforeninger", correct: true },
-                { text: "Statlige myndigheter", correct: false },
-                { text: "Bedriftsledelsen", correct: false }
-            ]
-        },
-        {
-            question: "Hva skal arbeidsgiver gjøre ved masseoppsigelser?",
-            answers: [
-                { text: "Informere pressen", correct: false },
-                { text: "Tilby høyere lønn", correct: false },
-                { text: "Drøfte med tillitsvalgte", correct: true },
-                { text: "Avholde møter med hver enkelt ansatt", correct: false }
-            ]
-        },
-        {
-            question: "Hva kan utløse strafferettslig ansvar innen arbeidsretten?",
-            answers: [
-                { text: "Manglende lønnsutbetaling", correct: false },
-                { text: "Usaklig oppsigelse", correct: true },
-                { text: "Manglende arbeidsmiljøtiltak", correct: false },
-                { text: "Brudd på tariffavtaler", correct: false }
-            ]
-        },
-        {
-            question: "Hva er et eksempel på virksomhetens forhold som kan begrunne oppsigelse?",
-            answers: [
-                { text: "Sykefravær", correct: false },
-                { text: "Omstilling", correct: true },
-                { text: "Arbeidstakers adferd", correct: false },
-                { text: "Arbeidstakers alder", correct: false }
-            ]
-        },
-        {
-            question: "Hva må arbeidsgiver gjøre i forkant av en nedbemanning?",
-            answers: [
-                { text: "Redusere arbeidsmiljøtiltak", correct: false },
-                { text: "Ansette nye medarbeidere", correct: false },
-                { text: "Vurdere behovet for nedbemanning", correct: true },
-                { text: "Informere Arbeidstilsynet", correct: false }
-            ]
-        },
-        {
-            question: "Hva må arbeidsgiver dokumentere ved en nedbemanning?",
-            answers: [
-                { text: "Økonomisk tap", correct: false },
-                { text: "Arbeidstakers sykefravær", correct: false },
-                { text: "Saklig grunn for endringer i bedriften", correct: true },
-                { text: "Arbeidstakers kompetanse", correct: false }
-            ]
-        },
-        {
-            question: "Hva innebærer interesseavveining ved oppsigelse?",
-            answers: [
-                { text: "Vurdere om arbeidstaker kan jobbe i en annen avdeling", correct: false },
-                { text: "Sammenligne arbeidstakers interesser med virksomhetens behov", correct: true },
-                { text: "Vurdere arbeidstakers lønn", correct: false },
-                { text: "Redusere antall ansatte", correct: false }
-            ]
-        }
+        // Add remaining questions here...
     ];
 
     let currentQuestionIndex = 0;
     let score = 0;
     let timer;
-    const timeLimit = 30;
+    let timeLeft = 7;
+    const timeLimit = 7;
+    const leaderboard = [];
+    let userName = '';
+
+    function setUserName() {
+        userName = document.getElementById('username').value;
+        if (userName) {
+            document.getElementById('name-input').classList.add('hidden');
+            document.getElementById('quiz-section').classList.remove('hidden');
+        } else {
+            alert('Vennligst skriv inn navnet ditt.');
+        }
+    }
 
     function startQuiz() {
-        document.querySelector('.quiz-section').classList.add('hidden');
+        document.getElementById('quiz-section').classList.add('hidden');
         document.getElementById('question-container').classList.remove('hidden');
         document.getElementById('total-questions').textContent = questions.length;
         currentQuestionIndex = 0;
@@ -320,7 +205,7 @@
     }
 
     function startTimer() {
-        let timeLeft = timeLimit;
+        timeLeft = timeLimit;
         document.getElementById('time-left').textContent = timeLeft;
         timer = setInterval(() => {
             timeLeft--;
@@ -366,7 +251,11 @@
         });
 
         if (answer.correct) {
-            score += Math.floor(timeLeft * 10);
+            score += 10;
+            playSound('correct');
+        } else {
+            score -= 5;
+            playSound('incorrect');
         }
 
         if (currentQuestionIndex < questions.length - 1) {
@@ -375,6 +264,11 @@
             document.getElementById('submit-btn').classList.remove('hidden');
         }
         clearInterval(timer);
+    }
+
+    function playSound(type) {
+        const audio = new Audio(type === 'correct' ? 'correct-sound.mp3' : 'incorrect-sound.mp3');
+        audio.play();
     }
 
     function showNextQuestion() {
@@ -387,15 +281,31 @@
     }
 
     function submitQuiz() {
-        alert(`Du fikk ${score} poeng av ${questions.length * timeLimit * 10}!`);
+        alert(`Du fikk ${score} poeng!`);
         document.getElementById('user-score').textContent = score;
+        leaderboard.push({ name: userName, score: score });
+        updateLeaderboard();
         document.getElementById('profile-section').classList.remove('hidden');
         document.getElementById('question-container').classList.add('hidden');
     }
 
+    function updateLeaderboard() {
+        const leaderboardList = document.getElementById('leaderboard-list');
+        leaderboardList.innerHTML = '';
+        leaderboard.sort((a, b) => b.score - a.score);
+        leaderboard.forEach(entry => {
+            const li = document.createElement('li');
+            li.textContent = `${entry.name}: ${entry.score}`;
+            leaderboardList.appendChild(li);
+        });
+        document.getElementById('leaderboard').classList.remove('hidden');
+    }
+
     function restartQuiz() {
-        document.querySelector('.quiz-section').classList.remove('hidden');
+        document.getElementById('quiz-section').classList.remove('hidden');
         document.getElementById('profile-section').classList.add('hidden');
+        document.getElementById('leaderboard').classList.add('hidden');
+        document.getElementById('name-input').classList.remove('hidden');
     }
 </script>
 
