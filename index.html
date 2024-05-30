@@ -134,12 +134,18 @@
             width: 0;
             transition: width 0.3s;
         }
-        .quiz-image {
+        .quiz-image-left, .quiz-image-right {
             max-width: 100%;
             border-radius: 8px;
             margin-bottom: 20px;
             position: absolute;
             top: 20px;
+            width: 100px;
+        }
+        .quiz-image-left {
+            left: 20px;
+        }
+        .quiz-image-right {
             right: 20px;
         }
     </style>
@@ -148,7 +154,7 @@
 
 <header>
     <h1>Velkommen til QuizMaster</h1>
-    <img src="data:image/webp;base64,UklGRiIAAABXRUJQVlA4IC4AAADwADeFWDuEYpziq2lJBNiwiHjz/1QBAf+xA+OIHAA==" alt="QuizMaster" class="quiz-image">
+    <img src="file-LuvnVJxnCyoqUINrqrZxbpRN" alt="QuizMaster" class="quiz-image-right">
 </header>
 
 <div class="container">
@@ -175,6 +181,7 @@
         <div id="answers"></div>
         <button class="next-btn hidden" id="next-btn" onclick="showNextQuestion()">Neste spørsmål</button>
         <button class="submit-btn hidden" id="submit-btn" onclick="submitQuiz()">Send inn svar</button>
+        <img src="file-LuvnVJxnCyoqUINrqrZxbpRN" alt="QuizMaster" class="quiz-image-left">
     </div>
 
     <div class="profile-section hidden" id="profile-section">
@@ -186,6 +193,7 @@
         <button class="theme-btn" onclick="toggleTheme()">Bytt tema</button>
         <button class="share-btn" onclick="shareResult()">Del resultat</button>
         <button class="feedback-btn" onclick="provideFeedback()">Gi tilbakemelding</button>
+        <img src="file-LuvnVJxnCyoqUINrqrZxbpRN" alt="QuizMaster" class="quiz-image-right">
     </div>
 </div>
 
@@ -533,11 +541,9 @@
     function shareResult() {
         const resultMessage = `Jeg har oppnådd ${score} poeng på QuizMaster! Prøv selv og se om du kan slå min score!`;
         const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(resultMessage)}`;
-        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(resultMessage)}`;
-        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(resultMessage)}`;
+        const snapchatUrl = `https://www.snapchat.com/scan?attachmentUrl=${encodeURIComponent(resultMessage)}`;
         window.open(linkedinUrl, '_blank');
-        window.open(facebookUrl, '_blank');
-        window.open(whatsappUrl, '_blank');
+        window.open(snapchatUrl, '_blank');
     }
 
     function provideFeedback() {
