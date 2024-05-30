@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuizMaster - Den beste quizopplevelsen</title>
+    <title>QuizMaster - Powerpoint oppsigelse nedbemanning</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -79,6 +79,10 @@
         .progress {
             margin-bottom: 15px;
         }
+        .timer {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -89,7 +93,7 @@
 
 <div class="container">
     <div class="quiz-section">
-        <h2>Dagens Quiz</h2>
+        <h2>Dagens Quiz - Powerpoint oppsigelse nedbemanning</h2>
         <p>Trykk på start-knappen for å begynne quizen.</p>
         <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
     </div>
@@ -98,6 +102,7 @@
         <div class="progress">
             Spørsmål <span id="current-question">1</span> av <span id="total-questions">0</span>
         </div>
+        <div class="timer" id="timer">Tid igjen: <span id="time-left">30</span> sekunder</div>
         <div id="question" class="question"></div>
         <div id="answers"></div>
         <button class="next-btn hidden" id="next-btn" onclick="showNextQuestion()">Neste spørsmål</button>
@@ -107,6 +112,7 @@
     <div class="profile-section hidden" id="profile-section">
         <h2>Din Profil</h2>
         <p>Poeng: <span id="user-score">0</span></p>
+        <p><button onclick="restartQuiz()">Start på nytt</button></p>
     </div>
 </div>
 
@@ -117,234 +123,218 @@
 <script>
     const questions = [
         {
-            question: "I arbeidsmiljøloven § 1-1 står det at lovens formål er å sikre et arbeidsmiljø som gir grunnlag for en helsefremmende og meningsfylt arbeidssituasjon. Hvilket av følgende er IKKE nevnt som en del av formålet?",
+            question: "Hva er hovedforpliktelsen til arbeidstakeren i et arbeidsforhold?",
             answers: [
-                { text: "Full trygghet mot fysiske og psykiske skadevirkninger", correct: false },
-                { text: "En arbeidsplass med høy lønn", correct: true },
-                { text: "En arbeidsplass med meningsfylt arbeidssituasjon", correct: false },
-                { text: "Et inkluderende arbeidsliv", correct: false }
+                { text: "Utbetale vederlaget", correct: false },
+                { text: "Stille sin arbeidskraft til disposisjon", correct: true },
+                { text: "Sørge for et godt arbeidsmiljø", correct: false },
+                { text: "Rekruttere nye ansatte", correct: false }
             ]
         },
         {
-            question: "I arbeidsmiljøloven § 10-6 står det at overtid skal begrenses. Hva er den maksimale tillatte overtid per uke?",
+            question: "Hva er hovedforpliktelsen til arbeidsgiveren i et arbeidsforhold?",
             answers: [
-                { text: "10 timer", correct: true },
-                { text: "15 timer", correct: false },
-                { text: "20 timer", correct: false },
-                { text: "25 timer", correct: false }
+                { text: "Tilby opplæring", correct: false },
+                { text: "Stille sin arbeidskraft til disposisjon", correct: false },
+                { text: "Utbetale vederlaget (lønn)", correct: true },
+                { text: "Sette opp arbeidsplaner", correct: false }
             ]
         },
         {
-            question: "Ifølge arbeidsmiljøloven § 10-9, hva er kravet til pauser for arbeidstakere som arbeider mer enn 5,5 timer?",
+            question: "Hva omfatter individuell arbeidsrett?",
             answers: [
-                { text: "15 minutter", correct: false },
-                { text: "30 minutter", correct: true },
-                { text: "45 minutter", correct: false },
-                { text: "60 minutter", correct: false }
+                { text: "Tariffavtaler", correct: false },
+                { text: "Boikott", correct: false },
+                { text: "Inngåelse av arbeidsavtaler", correct: true },
+                { text: "Lockout", correct: false }
             ]
         },
         {
-            question: "I arbeidsmiljøloven § 12-2 reguleres svangerskapspermisjon. Hvor mange uker permisjon har en arbeidstaker rett til før fødselen?",
+            question: "Hvilken lov gir vern mot usaklig oppsigelse?",
             answers: [
-                { text: "2 uker", correct: false },
-                { text: "3 uker", correct: false },
-                { text: "4 uker", correct: true },
-                { text: "5 uker", correct: false }
+                { text: "Ferieloven", correct: false },
+                { text: "Arbeidsmiljøloven", correct: true },
+                { text: "Likestillings- og diskrimineringsloven", correct: false },
+                { text: "Folketrygdloven", correct: false }
             ]
         },
         {
-            question: "Ifølge arbeidsmiljøloven § 12-9, hvor mange dager permisjon har en arbeidstaker rett til ved barns sykdom per kalenderår?",
+            question: "Hva er et viktig element i saklig oppsigelse?",
             answers: [
-                { text: "5 dager", correct: false },
-                { text: "10 dager", correct: true },
-                { text: "15 dager", correct: false },
-                { text: "20 dager", correct: false }
+                { text: "Arbeidstakers forhold", correct: true },
+                { text: "Tariffavtaler", correct: false },
+                { text: "EØS-avtalen", correct: false },
+                { text: "Folketrygdens bestemmelser", correct: false }
             ]
         },
         {
-            question: "I arbeidsmiljøloven § 13-1 står det at direkte og indirekte diskriminering på grunn av politisk syn, medlemskap i arbeidstakerorganisasjon eller alder er forbudt. Hvilket av følgende er også forbudt?",
+            question: "Hva må arbeidsgiver vurdere ved en oppsigelse på grunn av virksomhetens forhold?",
             answers: [
-                { text: "Diskriminering på grunn av kjønn", correct: false },
-                { text: "Diskriminering på grunn av etnisitet", correct: false },
-                { text: "Diskriminering på grunn av seksuell orientering", correct: false },
-                { text: "Alle de ovennevnte", correct: true }
+                { text: "Konsernets behov", correct: false },
+                { text: "Arbeidstakers alder", correct: false },
+                { text: "Om det finnes annet passende arbeid", correct: true },
+                { text: "Tariffavtalens bestemmelser", correct: false }
             ]
         },
         {
-            question: "I arbeidsmiljøloven § 13-3 står det at forskjellsbehandling som har et saklig formål, ikke er uforholdsmessig inngripende og er nødvendig for utøvelse av arbeid eller yrke, anses ikke som diskriminering. Hvilket av følgende er IKKE en betingelse for lovlig forskjellsbehandling?",
+            question: "Hvilken paragraf i arbeidsmiljøloven omhandler vern mot usaklig oppsigelse?",
             answers: [
-                { text: "Saklig formål", correct: false },
-                { text: "Nødvendig for utøvelse av arbeid", correct: false },
-                { text: "Uforholdsmessig inngripende", correct: true },
-                { text: "Rimelig forhold mellom mål og middel", correct: false }
+                { text: "§ 14-2", correct: false },
+                { text: "§ 1-9", correct: false },
+                { text: "§ 15-7", correct: true },
+                { text: "§ 15-1", correct: false }
             ]
         },
         {
-            question: "Hva er kravet til opprettelse av arbeidsmiljøutvalg ifølge arbeidsmiljøloven § 7-1 etter endringen som trådte i kraft 1. januar 2024?",
+            question: "Hva er en viktig prosess ved oppsigelse på grunn av virksomhetens forhold?",
             answers: [
-                { text: "Bedrifter med minst 20 ansatte", correct: false },
-                { text: "Bedrifter med minst 30 ansatte", correct: true },
-                { text: "Bedrifter med minst 40 ansatte", correct: false },
-                { text: "Bedrifter med minst 50 ansatte", correct: false }
+                { text: "Tilbud om sluttavtale", correct: false },
+                { text: "Individuelle drøftelsesmøter", correct: true },
+                { text: "Informasjon til fagforeningen", correct: false },
+                { text: "Søksmål", correct: false }
             ]
         },
         {
-            question: "I arbeidsmiljøloven § 7-2 står det at arbeidsmiljøutvalget skal arbeide for et fullt forsvarlig arbeidsmiljø. Hvilket av følgende er IKKE en oppgave for arbeidsmiljøutvalget?",
+            question: "Hvilket dokument må arbeidsgiver opprette ved en nedbemanning?",
             answers: [
-                { text: "Å gi ansatte høyere lønn", correct: true },
-                { text: "Å overvåke arbeidsmiljøet", correct: false },
-                { text: "Å delta i planlegging av verne- og miljøarbeid", correct: false },
-                { text: "Å behandle spørsmål om helse, miljø og sikkerhet", correct: false }
+                { text: "Tariffavtale", correct: false },
+                { text: "Oppsigelsesbrev", correct: true },
+                { text: "Sluttvederlag", correct: false },
+                { text: "Ferieplan", correct: false }
             ]
         },
         {
-            question: "I arbeidsmiljøloven § 3-1 står det at arbeidsgiver skal sørge for systematisk helse-, miljø- og sikkerhetsarbeid. Hvilket av følgende er IKKE en del av dette arbeidet?",
+            question: "Hva innebærer 'annet passende arbeid'?",
             answers: [
-                { text: "Kartlegging av farer og problemer", correct: false },
-                { text: "Utarbeidelse av handlingsplaner", correct: false },
-                { text: "Tilby gratis lunsj til ansatte", correct: true },
-                { text: "Gjennomføring av tiltak for å redusere risiko", correct: false }
+                { text: "Opprettelse av ny stilling", correct: false },
+                { text: "Et arbeid likt det opprinnelige", correct: true },
+                { text: "Avskjed", correct: false },
+                { text: "Sluttavtale", correct: false }
             ]
         },
         {
-            question: "Ifølge arbeidsmiljøloven § 3-5, hvem skal arbeidsgiver gi opplæring i HMS?",
+            question: "Hva skal arbeidsgiver gjøre før en oppsigelse på grunn av virksomhetens forhold?",
             answers: [
-                { text: "Alle ansatte", correct: false },
-                { text: "Ledere og verneombud", correct: true },
-                { text: "Nyansatte", correct: false },
-                { text: "Midlertidige ansatte", correct: false }
+                { text: "Tilby sluttpakker", correct: false },
+                { text: "Foreta en interesseavveining", correct: false },
+                { text: "Avholde drøftelsesmøter", correct: true },
+                { text: "Redusere lønn", correct: false }
             ]
         },
         {
-            question: "Hva defineres som trakassering ifølge arbeidsmiljøloven § 4-3 tredje ledd?",
+            question: "Hva er formålet med fortrinnsrett?",
             answers: [
-                { text: "Handlinger som har som formål eller virkning å være krenkende, skremmende, fiendtlige, nedverdigende eller ydmykende", correct: true },
-                { text: "Handlinger som har som formål å være morsomme", correct: false },
-                { text: "Handlinger som har som formål å være hjelpsomme", correct: false },
-                { text: "Handlinger som har som formål å være vennlige", correct: false }
+                { text: "Øke lønnsomheten", correct: false },
+                { text: "Motvirke urettferdig oppsigelse", correct: true },
+                { text: "Fremme tariffavtaler", correct: false },
+                { text: "Redusere sykefravær", correct: false }
             ]
         },
         {
-            question: "Hva er arbeidsgivers plikt ved mistanke om trakassering ifølge arbeidsmiljøloven?",
+            question: "Hva er en konsekvens av å inngå en sluttavtale?",
             answers: [
-                { text: "Å ignorere problemet", correct: false },
-                { text: "Å undersøke og håndtere saken", correct: true },
-                { text: "Å gi den mistenkte høyere lønn", correct: false },
-                { text: "Å redusere arbeidstiden", correct: false }
+                { text: "Fortsatt ansettelse", correct: false },
+                { text: "Fortrinnsrett til ny stilling", correct: false },
+                { text: "Endelig oppgjør av alle rettigheter og plikter", correct: true },
+                { text: "Plikt til å informere arbeidsgiver om fremtidige jobbsøknader", correct: false }
             ]
         },
         {
-            question: "Hva er hovedregelen for ansettelse i staten ifølge statsansatteloven?",
+            question: "Hvem kan være arbeidstakerpart i kollektiv arbeidsrett?",
             answers: [
-                { text: "Fast ansettelse", correct: true },
-                { text: "Midlertidig ansettelse", correct: false },
-                { text: "Ansettelse på prøve", correct: false },
-                { text: "Ansettelse på deltid", correct: false }
+                { text: "Enkeltarbeidstakere", correct: false },
+                { text: "Fagforeninger", correct: true },
+                { text: "Statlige myndigheter", correct: false },
+                { text: "Bedriftsledelsen", correct: false }
             ]
         },
         {
-            question: "Hva er maksimal varighet for midlertidig ansettelse før arbeidstaker har krav på fast ansettelse ifølge statsansatteloven?",
+            question: "Hva skal arbeidsgiver gjøre ved masseoppsigelser?",
             answers: [
-                { text: "1 år", correct: false },
-                { text: "2 år", correct: false },
-                { text: "3 år", correct: true },
-                { text: "4 år", correct: false }
+                { text: "Informere pressen", correct: false },
+                { text: "Tilby høyere lønn", correct: false },
+                { text: "Drøfte med tillitsvalgte", correct: true },
+                { text: "Avholde møter med hver enkelt ansatt", correct: false }
             ]
         },
         {
-            question: "Hva skal en arbeidsavtale minst omfatte ifølge arbeidsmiljøloven § 14-6?",
+            question: "Hva kan utløse strafferettslig ansvar innen arbeidsretten?",
             answers: [
-                { text: "Lønn og arbeidstid", correct: false },
-                { text: "Arbeidsoppgaver og arbeidssted", correct: false },
-                { text: "Varighet av arbeidsforholdet", correct: false },
-                { text: "Alle de ovennevnte", correct: true }
+                { text: "Manglende lønnsutbetaling", correct: false },
+                { text: "Usaklig oppsigelse", correct: true },
+                { text: "Manglende arbeidsmiljøtiltak", correct: false },
+                { text: "Brudd på tariffavtaler", correct: false }
             ]
         },
         {
-            question: "Når skal en skriftlig arbeidsavtale foreligge ifølge arbeidsmiljøloven § 14-5?",
+            question: "Hva er et eksempel på virksomhetens forhold som kan begrunne oppsigelse?",
             answers: [
-                { text: "Snarest mulig og senest én måned etter at arbeidsforholdet begynte", correct: true },
-                { text: "Snarest mulig og senest tre måneder etter at arbeidsforholdet begynte", correct: false },
-                { text: "Snarest mulig og senest seks måneder etter at arbeidsforholdet begynte", correct: false },
-                { text: "Snarest mulig og senest ett år etter at arbeidsforholdet begynte", correct: false }
+                { text: "Sykefravær", correct: false },
+                { text: "Omstilling", correct: true },
+                { text: "Arbeidstakers adferd", correct: false },
+                { text: "Arbeidstakers alder", correct: false }
             ]
         },
         {
-            question: "Hva er en arbeidstakers reservasjonsrett ved virksomhetsoverdragelse ifølge arbeidsmiljøloven § 16-3?",
+            question: "Hva må arbeidsgiver gjøre i forkant av en nedbemanning?",
             answers: [
-                { text: "Retten til å motsette seg at arbeidsforholdet overføres til ny arbeidsgiver", correct: true },
-                { text: "Retten til å kreve høyere lønn", correct: false },
-                { text: "Retten til å redusere arbeidstiden", correct: false },
-                { text: "Retten til å få gratis lunsj", correct: false }
+                { text: "Redusere arbeidsmiljøtiltak", correct: false },
+                { text: "Ansette nye medarbeidere", correct: false },
+                { text: "Vurdere behovet for nedbemanning", correct: true },
+                { text: "Informere Arbeidstilsynet", correct: false }
             ]
         },
         {
-            question: "Hva er fristen for å utøve reservasjonsretten ved virksomhetsoverdragelse ifølge arbeidsmiljøloven § 16-3?",
+            question: "Hva må arbeidsgiver dokumentere ved en nedbemanning?",
             answers: [
-                { text: "7 dager", correct: false },
-                { text: "14 dager", correct: true },
-                { text: "21 dager", correct: false },
-                { text: "30 dager", correct: false }
+                { text: "Økonomisk tap", correct: false },
+                { text: "Arbeidstakers sykefravær", correct: false },
+                { text: "Saklig grunn for endringer i bedriften", correct: true },
+                { text: "Arbeidstakers kompetanse", correct: false }
             ]
         },
         {
-            question: "Hva er arbeidsgivers plikt ved virksomhetsoverdragelse ifølge arbeidsmiljøloven § 16-2?",
+            question: "Hva innebærer interesseavveining ved oppsigelse?",
             answers: [
-                { text: "Å informere arbeidstakerne om overdragelsen", correct: true },
-                { text: "Å gi arbeidstakerne høyere lønn", correct: false },
-                { text: "Å redusere arbeidstakernes arbeidstid", correct: false },
-                { text: "Å tilby gratis lunsj", correct: false }
-            ]
-        },
-        {
-            question: "Hva er definisjonen av utleie av arbeidstakere ifølge arbeidsmarkedsloven?",
-            answers: [
-                { text: "Leie av arbeidstakere fra en arbeidsgiver til en oppdragsgiver der de innleide er underlagt oppdragsgivers ledelse", correct: true },
-                { text: "Leie av arbeidstakere fra en arbeidsgiver til en oppdragsgiver der de innleide er underlagt arbeidsgivers ledelse", correct: false },
-                { text: "Leie av arbeidstakere fra en oppdragsgiver til en arbeidsgiver der de innleide er underlagt oppdragsgivers ledelse", correct: false },
-                { text: "Leie av arbeidstakere fra en oppdragsgiver til en arbeidsgiver der de innleide er underlagt arbeidsgivers ledelse", correct: false }
-            ]
-        },
-        {
-            question: "Hva er hovedregelen for innleie av arbeidstakere ifølge statsansatteloven?",
-            answers: [
-                { text: "Innleie er tillatt for en begrenset periode", correct: true },
-                { text: "Innleie er tillatt for en ubegrenset periode", correct: false },
-                { text: "Innleie er ikke tillatt", correct: false },
-                { text: "Innleie er tillatt uten restriksjoner", correct: false }
-            ]
-        },
-        {
-            question: "Hva er vikarbyrådirektivets prinsipp om likebehandling ved utleie fra bemanningsforetak?",
-            answers: [
-                { text: "Utleid arbeidstaker skal minst sikres de vilkår som ville kommet til anvendelse dersom arbeidstaker hadde vært ansatt hos innleier for å utføre samme arbeid", correct: true },
-                { text: "Utleid arbeidstaker skal sikres høyere lønn enn innleiers ansatte", correct: false },
-                { text: "Utleid arbeidstaker skal sikres kortere arbeidstid enn innleiers ansatte", correct: false },
-                { text: "Utleid arbeidstaker skal sikres lengre pauser enn innleiers ansatte", correct: false }
-            ]
-        },
-        {
-            question: "Hva er hovedregelen for oppsigelse av arbeidsforhold ifølge arbeidsmiljøloven § 15-7?",
-            answers: [
-                { text: "Oppsigelse må være saklig begrunnet", correct: true },
-                { text: "Oppsigelse kan skje uten begrunnelse", correct: false },
-                { text: "Oppsigelse må begrunnes med økonomiske årsaker", correct: false },
-                { text: "Oppsigelse må begrunnes med personlige årsaker", correct: false }
+                { text: "Vurdere om arbeidstaker kan jobbe i en annen avdeling", correct: false },
+                { text: "Sammenligne arbeidstakers interesser med virksomhetens behov", correct: true },
+                { text: "Vurdere arbeidstakers lønn", correct: false },
+                { text: "Redusere antall ansatte", correct: false }
             ]
         }
     ];
 
     let currentQuestionIndex = 0;
     let score = 0;
+    let timer;
+    const timeLimit = 30;
 
     function startQuiz() {
         document.querySelector('.quiz-section').classList.add('hidden');
         document.getElementById('question-container').classList.remove('hidden');
         document.getElementById('total-questions').textContent = questions.length;
+        currentQuestionIndex = 0;
+        score = 0;
         showQuestion(questions[currentQuestionIndex]);
+        startTimer();
+    }
+
+    function startTimer() {
+        let timeLeft = timeLimit;
+        document.getElementById('time-left').textContent = timeLeft;
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('time-left').textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                showNextQuestion();
+            }
+        }, 1000);
     }
 
     function showQuestion(question) {
+        clearInterval(timer);
+        startTimer();
         const questionElement = document.getElementById('question');
         const answersElement = document.getElementById('answers');
         document.getElementById('current-question').textContent = currentQuestionIndex + 1;
@@ -376,7 +366,7 @@
         });
 
         if (answer.correct) {
-            score++;
+            score += Math.floor(timeLeft * 10);
         }
 
         if (currentQuestionIndex < questions.length - 1) {
@@ -384,18 +374,28 @@
         } else {
             document.getElementById('submit-btn').classList.remove('hidden');
         }
+        clearInterval(timer);
     }
 
     function showNextQuestion() {
         currentQuestionIndex++;
-        showQuestion(questions[currentQuestionIndex]);
+        if (currentQuestionIndex < questions.length) {
+            showQuestion(questions[currentQuestionIndex]);
+        } else {
+            submitQuiz();
+        }
     }
 
     function submitQuiz() {
-        alert(`Du fikk ${score} poeng av ${questions.length}!`);
+        alert(`Du fikk ${score} poeng av ${questions.length * timeLimit * 10}!`);
         document.getElementById('user-score').textContent = score;
         document.getElementById('profile-section').classList.remove('hidden');
         document.getElementById('question-container').classList.add('hidden');
+    }
+
+    function restartQuiz() {
+        document.querySelector('.quiz-section').classList.remove('hidden');
+        document.getElementById('profile-section').classList.add('hidden');
     }
 </script>
 
