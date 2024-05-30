@@ -51,11 +51,19 @@
             margin-bottom: 10px;
             display: block;
             font-size: 14px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        .answer:hover {
+            background-color: #f1f1f1;
         }
         .hidden {
             display: none;
         }
-        .start-btn, .next-btn, .submit-btn {
+        .start-btn, .next-btn, .submit-btn, .theme-btn {
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -66,7 +74,7 @@
             transition: background-color 0.3s;
             margin-top: 20px;
         }
-        .start-btn:hover, .next-btn:hover, .submit-btn:hover {
+        .start-btn:hover, .next-btn:hover, .submit-btn:hover, .theme-btn:hover {
             background-color: #45a049;
         }
         .correct {
@@ -115,6 +123,19 @@
         .name-input button:hover {
             background-color: #45a049;
         }
+        .progress-bar {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .progress-bar-inner {
+            height: 20px;
+            background-color: #4CAF50;
+            width: 0;
+            transition: width 0.3s;
+        }
     </style>
 </head>
 <body>
@@ -139,6 +160,9 @@
         <div class="progress">
             Spørsmål <span id="current-question">1</span> av <span id="total-questions">0</span>
         </div>
+        <div class="progress-bar">
+            <div class="progress-bar-inner" id="progress-bar-inner"></div>
+        </div>
         <div class="timer" id="timer">Tid igjen: <span id="time-left">7</span> sekunder</div>
         <div id="question" class="question"></div>
         <div id="answers"></div>
@@ -150,6 +174,7 @@
         <h2>Din Profil</h2>
         <p>Poeng: <span id="user-score">0</span></p>
         <p><button onclick="restartQuiz()">Start på nytt</button></p>
+        <button class="theme-btn" onclick="toggleTheme()">Bytt tema</button>
     </div>
 </div>
 
@@ -173,7 +198,33 @@
                 { text: "Rekruttere nye ansatte", correct: false }
             ]
         },
-        // Add remaining questions here...
+        {
+            question: "Hva er hovedforpliktelsen til arbeidsgiveren i et arbeidsforhold?",
+            answers: [
+                { text: "Tilby opplæring", correct: false },
+                { text: "Stille sin arbeidskraft til disposisjon", correct: false },
+                { text: "Utbetale vederlaget (lønn)", correct: true },
+                { text: "Sette opp arbeidsplaner", correct: false }
+            ]
+        },
+        {
+            question: "Hva omfatter individuell arbeidsrett?",
+            answers: [
+                { text: "Tariffavtaler", correct: false },
+                { text: "Boikott", correct: false },
+                { text: "Inngåelse av arbeidsavtaler", correct: true },
+                { text: "Lockout", correct: false }
+            ]
+        },
+        {
+            question: "Hvilken lov gir vern mot usaklig oppsigelse?",
+            answers: [
+                { text: "Ferieloven", correct: false },
+                { text: "Arbeidsmiljøloven", correct: true },
+                { text: "Likestillings- og diskrimineringsloven", correct: false },
+                { text: "Folketrygdloven", correct: false }
+            ]
+        }
     ];
 
     let currentQuestionIndex = 0;
@@ -183,6 +234,7 @@
     const timeLimit = 7;
     const leaderboard = [];
     let userName = '';
+    let theme = 'light';
 
     function setUserName() {
         userName = document.getElementById('username').value;
@@ -223,6 +275,7 @@
         const questionElement = document.getElementById('question');
         const answersElement = document.getElementById('answers');
         document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+        document.getElementById('progress-bar-inner').style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
 
         questionElement.innerHTML = `<h3>${question.question}</h3>`;
         answersElement.innerHTML = '';
@@ -306,6 +359,18 @@
         document.getElementById('profile-section').classList.add('hidden');
         document.getElementById('leaderboard').classList.add('hidden');
         document.getElementById('name-input').classList.remove('hidden');
+    }
+
+    function toggleTheme() {
+        if (theme === 'light') {
+            document.body.style.backgroundColor = '#333';
+            document.body.style.color = '#fff';
+            theme = 'dark';
+        } else {
+            document.body.style.backgroundColor = '#f4f4f4';
+            document.body.style.color = '#000';
+            theme = 'light';
+        }
     }
 </script>
 
