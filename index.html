@@ -6,8 +6,6 @@
     <title>QuizMaster - Powerpoint oppsigelse nedbemanning</title>
     <meta property="og:title" content="QuizMaster - Powerpoint oppsigelse nedbemanning">
     <meta property="og:description" content="Velkommen til QuizMaster! Test dine kunnskaper med vår quiz.">
-    <meta property="og:image" content="QuizMaster jpg..jpg">
-    <meta property="og:type" content="website">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,7 +24,6 @@
             padding: 20px;
             text-align: center;
             width: 100%;
-            position: relative;
         }
         .container {
             background: white;
@@ -36,7 +33,6 @@
             max-width: 800px;
             width: 90%;
             margin: 20px 0;
-            position: relative;
         }
         footer {
             background-color: #333;
@@ -95,9 +91,9 @@
             margin-bottom: 15px;
         }
         #leaderboard {
-            position: fixed;
-            top: 10px;
-            right: 10px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background: white;
             padding: 10px;
             border: 1px solid #ccc;
@@ -152,6 +148,7 @@
         .quiz-image-right {
             right: 20px;
         }
+
         @media (max-width: 600px) {
             .quiz-image-left, .quiz-image-right {
                 display: none;
@@ -184,7 +181,7 @@
         <div class="progress-bar">
             <div class="progress-bar-inner" id="progress-bar-inner"></div>
         </div>
-        <div id="timer">Tid igjen: <span id="time-left">7</span> sekunder</div>
+        <div id="timer">Tid brukt: <span id="time-used">0</span> sekunder</div>
         <div id="question" class="question"></div>
         <div id="answers"></div>
         <button class="next-btn hidden" id="next-btn" onclick="showNextQuestion()">Neste spørsmål</button>
@@ -406,7 +403,6 @@
     let userName = '';
     let theme = 'light';
     let startTime = null;
-    let timer;
 
     function setUserName() {
         userName = document.getElementById('username').value;
@@ -448,11 +444,9 @@
 
         document.getElementById('next-btn').classList.add('hidden');
         document.getElementById('submit-btn').classList.add('hidden');
-        startTimer();
     }
 
     function selectAnswer(answer, button) {
-        clearInterval(timer);
         const answers = document.querySelectorAll('.answer');
         answers.forEach(btn => {
             btn.disabled = true;
@@ -564,32 +558,10 @@
     }
 
     function updateTimer() {
-        const timerElement = document.getElementById('time-left');
-        let timeLeft = 7;
-        timerElement.textContent = timeLeft;
-        timer = setInterval(() => {
-            timeLeft--;
-            timerElement.textContent = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                document.getElementById('next-btn').classList.remove('hidden');
-                document.getElementById('submit-btn').classList.remove('hidden');
-            }
-        }, 1000);
-    }
-
-    function startTimer() {
-        const timerElement = document.getElementById('time-left');
-        let timeLeft = 7;
-        timerElement.textContent = timeLeft;
-        timer = setInterval(() => {
-            timeLeft--;
-            timerElement.textContent = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                showNextQuestion();
-            }
-        }, 1000);
+        const timerElement = document.getElementById('time-used');
+        const timeUsed = Math.round((new Date() - startTime) / 1000);
+        timerElement.textContent = timeUsed;
+        setTimeout(updateTimer, 1000);
     }
 </script>
 
