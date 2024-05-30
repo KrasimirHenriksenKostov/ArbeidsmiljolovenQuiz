@@ -152,6 +152,17 @@
         .quiz-image-right {
             right: 20px;
         }
+        @media (max-width: 600px) {
+            .quiz-image-left, .quiz-image-right {
+                display: none;
+            }
+            .container {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
     </style>
 </head>
 <body>
