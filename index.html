@@ -22,6 +22,7 @@
             padding: 20px;
             text-align: center;
             width: 100%;
+            position: relative;
         }
         .container {
             background: white;
@@ -31,6 +32,7 @@
             max-width: 800px;
             width: 90%;
             margin: 20px 0;
+            position: relative;
         }
         footer {
             background-color: #333;
@@ -132,12 +134,18 @@
             width: 0;
             transition: width 0.3s;
         }
+        .quiz-image {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Velkommen til QuizMaster</h1>
+    <img src="data:image/webp;base64,{base64_encoded_image}" alt="QuizMaster" class="quiz-image">
 </header>
 
 <div class="container">
