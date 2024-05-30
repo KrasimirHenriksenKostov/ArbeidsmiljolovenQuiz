@@ -65,7 +65,7 @@
         .hidden {
             display: none;
         }
-        .start-btn, .next-btn, .submit-btn, .theme-btn, .share-btn {
+        .start-btn, .next-btn, .submit-btn, .theme-btn, .share-btn, .feedback-btn {
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -76,7 +76,7 @@
             transition: background-color 0.3s;
             margin-top: 20px;
         }
-        .start-btn:hover, .next-btn:hover, .submit-btn:hover, .theme-btn:hover, .share-btn:hover {
+        .start-btn:hover, .next-btn:hover, .submit-btn:hover, .theme-btn:hover, .share-btn:hover, .feedback-btn:hover {
             background-color: #45a049;
         }
         .correct {
@@ -135,20 +135,17 @@
             transition: width 0.3s;
         }
         .quiz-image {
-            max-width: 100%;
+            max-width: 100px;
             border-radius: 8px;
             margin-bottom: 20px;
             position: absolute;
             top: 20px;
-            right: 20px;
         }
         .quiz-image-left {
-            max-width: 100%;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            position: absolute;
-            top: 20px;
             left: 20px;
+        }
+        .quiz-image-right {
+            right: 20px;
         }
     </style>
 </head>
@@ -156,8 +153,8 @@
 
 <header>
     <h1>Velkommen til QuizMaster</h1>
-    <img src="data:image/webp;base64,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<<OutputTruncated>>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" alt="QuizMaster" class="quiz-image">
-    <img src="data:image/webp;base64,WRhQO1+4bJkcjrcBzy8Uup/NdeERFq/OIc3vIcVsHku+/XpTsySnuZAyIR5QefJJoY8km6T6sBCjXUizBWD2XyIdwV7RSQt5e6X2PFvKLkp3E/LSy55RsGmZwy3Uo0ofl2JV1Gs/vnldla+78HZVSJGMhqFm5Dq2CIc+dEF6QJnqIagFNYkL4Jn6LfI/BNHjIGXQbQm+I6Zjy123BTrsBiAjwLdX8BZG0Fm2MheI5HVNBo6mtcS2enSe0w9LkGf3g1/hs8ikcgI5R2hl85ULBpUp2JArBjql3DKN5ZRpm1o8YFJrWAO1D6qeicJAc1plLRT69HTCO3GPRKoD+wXzYPoegbwOzVeh/cnIu53YLQuhW5k5K9Niv94kYv8zpEKyCOr2ynJKfkK6ouJKV/VE4cJTwewuIgnyjnBgzRo3n3A38mNfsLbAWiEVND7Eq4hmEql2Z6+8W06jgN7bVHCEgqch3vS+wb3/tVfvC6P7HuZdKUpfE24cPx4qagIxLMxpDyGT1Ycrxnw+UcxrXC9uYzYsRmv7pi7XkGKckLS4H6lO6Z+3rymya95j/5YQtEIDMma11FjBXlaIguF2iXrUohhWi+NQp0dgvQ7T3gOPRhT9dP60cId6skJELffP9KedSf18XZaF/a5qkkNZPfyFi/5FHkTU04KlJ23XR4ABoSiMJi9p9bPtBi1zwJxDH48GYHhRl2UczYqSiS8rtG3eOh2uoH7/rW2KLTGWEWPXMQIhYUa41kuj7mKXhQgqscXk7kYyw2qnz6/zmxvS72/NCxBhkhHJkzF9AeUNatR2GPG1wD50w1vMhY9yBWaUVGaK6mjoumZgO/bUUNA0jMtO3Fp4f59huxz7upXx66QSFbAuFgq3ANo3FCAls+/LEYtKx1VDkOlpRhtIs6hbaCK0UyHcIf6xEL/3+RIY7X8AXs5KBnqO2HexkOxHq41jFd3MWFl/Fxn6//9E4dgAGfXdHedJTd+5AF6kLE2TgAawu9BrX94a5f9Cqml4IaXR6lRlEbia0i9Q0qBDfPPHKO+LVy1rhe/fJx1NgSSqUr3tNzJ41YyrQBXKcUsAI2VuoNfwgjQP7hijtPxVKc8lwWoujnEH4cSx3CMscRBIcRoJfP8bqG4v8LCrijwNbzakNQKrlVDuG4dLQKaB11zPuZITUVlHrZa0Y9JXOYJdnz9W1AcxOepM0i90Zk38yMod8oKncwt4OpQRF5IWy5loa24JBBBiY67mpPV0+sUC7nZ1hq5Mr+xBGYHTD7UGyKeQti3GsWQKdcLFuuKifbWDgfMw+EjOTQlPNEOCw2+ZNK2wZyKxH/dtFz3z6f2fKQAUY2mwa8u2Ns0Bb7GlZxSJEo2O2vVx3+SUxJM374XuiXYD4mdva/VMgLPUnyuR2WC38YwYxtSdvVNKm86U2FC+U1pqPg6Rwz/d1ymWpLrYK5HTWZ0I64xC8N+qfpwU03x7GVH/fgRq2aw+1NVATuZ+DImnRbKnTeyvVXiMwbYiHqI+kQpABmqSTqC09IVZwFJLzJDihYh6CowVUfEuqi/JDN8ncKxY2o1J3AK+fAjWIW4Jx2cK2PR3cuMq/s0di5kIxYqHi9ulb0mu5CJe2w/qtUPcvfKZiDwmtaYdG7nUS3Ktaf886YwymVmD/D80g3XnG7sy0nm1UHRrXHcJt0f16boSlW6OgNl3IHOOY396pQQQH23Y9b93WeoDqY5+3kzuiVuUzGNTS5ez1lyjGA58IYZd4G97l9Ul/+bqNMq3UTxBSlBEDXlYH3SopNbkydLLZCtawO2HPJ1DOSEQAO4a1jcZhXhNQlJJHnPBtf2T6NqgtYWHO28anVCbwU2fGSd+DEF07X6X/1Ql74ubKY8UhhF3sdAlGzoFQHYQPjqrUbdDejK3LfQ9Dg8MCmbbRnYByO4Vhc1bIGIE251DbUobaO/Gct9rT5yetfscL1D7Vkqij3fjcy/6pN4lBCo2CU/DwZtxH65A92wx7hYFHGUpBJnvvgVrLPlYatwgvbNE9oXQOjAFMBYAkwcd0e<<OutputTruncated>>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" alt="QuizMaster" class="quiz-image-left">
+    <img src="data:image/webp;base64,{base64_encoded_image}" alt="QuizMaster" class="quiz-image quiz-image-left">
+    <img src="data:image/webp;base64,{base64_encoded_image}" alt="QuizMaster" class="quiz-image quiz-image-right">
 </header>
 
 <div class="container">
@@ -191,6 +188,7 @@
         <button onclick="restartQuiz()">Start på nytt</button>
         <button class="theme-btn" onclick="toggleTheme()">Bytt tema</button>
         <button class="share-btn" onclick="shareResult()">Del resultat</button>
+        <button class="feedback-btn" onclick="giveFeedback()">Gi tilbakemelding</button>
     </div>
 </div>
 
@@ -396,6 +394,7 @@
     const leaderboard = [];
     let userName = '';
     let theme = 'light';
+    let startTime;
 
     function setUserName() {
         userName = document.getElementById('username').value;
@@ -413,6 +412,7 @@
         document.getElementById('total-questions').textContent = questions.length;
         currentQuestionIndex = 0;
         score = 0;
+        startTime = new Date();
         showQuestion(questions[currentQuestionIndex]);
     }
 
@@ -473,22 +473,49 @@
     }
 
     function submitQuiz() {
+        const endTime = new Date();
+        const timeTaken = Math.round((endTime - startTime) / 1000); // in seconds
         const message = score >= 80 ? 'Gratulerer! Du har bestått quizen!' : 'Du har ikke bestått quizen. Prøv igjen!';
-        alert(`Du fikk ${score} poeng! ${message}`);
+        alert(`Du fikk ${score} poeng på ${timeTaken} sekunder! ${message}`);
         document.getElementById('user-score').textContent = score;
-        leaderboard.push({ name: userName, score: score });
+        leaderboard.push({ name: userName, score: score, time: timeTaken });
         updateLeaderboard();
+        showDetailedResults();
         document.getElementById('profile-section').classList.remove('hidden');
         document.getElementById('question-container').classList.add('hidden');
+    }
+
+    function showDetailedResults() {
+        const resultsContainer = document.createElement('div');
+        resultsContainer.innerHTML = '<h2>Dine resultater</h2>';
+        questions.forEach((question, index) => {
+            const questionResult = document.createElement('div');
+            questionResult.innerHTML = `<p><strong>Spørsmål ${index + 1}:</strong> ${question.question}</p>`;
+            question.answers.forEach(answer => {
+                const answerElement = document.createElement('div');
+                answerElement.textContent = answer.text;
+                if (answer.correct) {
+                    answerElement.style.fontWeight = 'bold';
+                }
+                if (document.querySelectorAll('.answer')[index] && document.querySelectorAll('.answer')[index].classList.contains('correct')) {
+                    answerElement.style.color = 'green';
+                } else if (document.querySelectorAll('.answer')[index] && document.querySelectorAll('.answer')[index].classList.contains('incorrect')) {
+                    answerElement.style.color = 'red';
+                }
+                questionResult.appendChild(answerElement);
+            });
+            resultsContainer.appendChild(questionResult);
+        });
+        document.getElementById('profile-section').appendChild(resultsContainer);
     }
 
     function updateLeaderboard() {
         const leaderboardList = document.getElementById('leaderboard-list');
         leaderboardList.innerHTML = '';
-        leaderboard.sort((a, b) => b.score - a.score);
+        leaderboard.sort((a, b) => b.score - a.score || a.time - b.time);
         leaderboard.forEach(entry => {
             const li = document.createElement('li');
-            li.textContent = `${entry.name}: ${entry.score}`;
+            li.textContent = `${entry.name}: ${entry.score} poeng på ${entry.time} sekunder`;
             leaderboardList.appendChild(li);
         });
         document.getElementById('leaderboard').classList.remove('hidden');
@@ -517,10 +544,20 @@
         const resultMessage = `Jeg har oppnådd ${score} poeng på QuizMaster! Prøv selv og se om du kan slå min score!`;
         const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(resultMessage)}`;
         const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(resultMessage)}`;
-        const snapchatUrl = `https://snapchat.com/scan?attachmentUrl=${encodeURIComponent(resultMessage)}`;
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(resultMessage)}`;
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(resultMessage)}`;
         window.open(linkedinUrl, '_blank');
         window.open(facebookUrl, '_blank');
-        window.open(snapchatUrl, '_blank');
+        window.open(twitterUrl, '_blank');
+        window.open(whatsappUrl, '_blank');
+    }
+
+    function giveFeedback() {
+        const feedback = prompt('Vennligst gi oss din tilbakemelding:');
+        if (feedback) {
+            alert('Takk for din tilbakemelding!');
+            // Send feedback to the server or process it as needed
+        }
     }
 </script>
 
