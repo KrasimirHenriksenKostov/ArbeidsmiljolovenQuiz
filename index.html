@@ -63,7 +63,7 @@
         .hidden {
             display: none;
         }
-        .start-btn, .next-btn, .submit-btn, .theme-btn {
+        .start-btn, .next-btn, .submit-btn, .theme-btn, .share-btn {
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -74,7 +74,7 @@
             transition: background-color 0.3s;
             margin-top: 20px;
         }
-        .start-btn:hover, .next-btn:hover, .submit-btn:hover, .theme-btn:hover {
+        .start-btn:hover, .next-btn:hover, .submit-btn:hover, .theme-btn:hover, .share-btn:hover {
             background-color: #45a049;
         }
         .correct {
@@ -168,8 +168,9 @@
     <div class="profile-section hidden" id="profile-section">
         <h2>Din Profil</h2>
         <p>Poeng: <span id="user-score">0</span></p>
-        <p><button onclick="restartQuiz()">Start på nytt</button></p>
+        <button onclick="restartQuiz()">Start på nytt</button>
         <button class="theme-btn" onclick="toggleTheme()">Bytt tema</button>
+        <button class="share-btn" onclick="shareResult()">Del resultat</button>
     </div>
 </div>
 
@@ -180,7 +181,11 @@
 
 <footer>
     <p>&copy; 2024 QuizMaster. Alle rettigheter reservert.</p>
+    <p>Quizen er laget av Krasimir Henriksen Kostov. Gjerne gi en feedback på min LinkedIn profil: <a href="https://www.linkedin.com/in/krasimir-henriksen-kostov" target="_blank">Krasimir Henriksen Kostov</a></p>
 </footer>
+
+<audio id="correct-sound" src="correct-sound.mp3"></audio>
+<audio id="incorrect-sound" src="incorrect-sound.mp3"></audio>
 
 <script>
     const questions = [
@@ -275,13 +280,23 @@
             if (btn === button) {
                 btn.classList.add(answer.correct ? 'correct' : 'incorrect');
             }
+            if (!answer.correct && btn.innerText === questions[currentQuestionIndex].answers.find(a => a.correct).text) {
+                btn.classList.add('correct');
+            }
         });
 
         if (answer.correct) {
             score += 10;
+            document.getElementById('correct-sound').play();
+        } else {
+            document.getElementById('incorrect-sound').play();
         }
 
-        document.getElementById('next-btn').classList.remove('hidden');
+        if (currentQuestionIndex < questions.length - 1) {
+            document.getElementById('next-btn').classList.remove('hidden');
+        } else {
+            document.getElementById('submit-btn').classList.remove('hidden');
+        }
     }
 
     function showNextQuestion() {
@@ -294,7 +309,8 @@
     }
 
     function submitQuiz() {
-        alert(`Du fikk ${score} poeng!`);
+        const message = score >= 80 ? 'Gratulerer! Du har bestått quizen!' : 'Du har ikke bestått quizen. Prøv igjen!';
+        alert(`Du fikk ${score} poeng! ${message}`);
         document.getElementById('user-score').textContent = score;
         leaderboard.push({ name: userName, score: score });
         updateLeaderboard();
@@ -331,6 +347,16 @@
             document.body.style.color = '#000';
             theme = 'light';
         }
+    }
+
+    function shareResult() {
+        const resultMessage = `Jeg har oppnådd ${score} poeng på QuizMaster! Prøv selv og se om du kan slå min score!`;
+        const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(resultMessage)}`;
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(resultMessage)}`;
+        const snapchatUrl = `https://snapchat.com/scan?attachmentUrl=${encodeURIComponent(resultMessage)}`;
+        window.open(linkedinUrl, '_blank');
+        window.open(facebookUrl, '_blank');
+        window.open(snapchatUrl, '_blank');
     }
 </script>
 
