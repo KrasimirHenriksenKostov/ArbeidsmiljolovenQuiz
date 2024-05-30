@@ -163,7 +163,7 @@
         <div class="progress-bar">
             <div class="progress-bar-inner" id="progress-bar-inner"></div>
         </div>
-        <div class="timer" id="timer">Tid igjen: <span id="time-left">7</span> sekunder</div>
+        <div class="timer" id="timer">Tid igjen: <span id="time-left">10</span> sekunder</div>
         <div id="question" class="question"></div>
         <div id="answers"></div>
         <button class="next-btn hidden" id="next-btn" onclick="showNextQuestion()">Neste spørsmål</button>
@@ -230,8 +230,8 @@
     let currentQuestionIndex = 0;
     let score = 0;
     let timer;
-    let timeLeft = 7;
-    const timeLimit = 7;
+    let timeLeft = 10;
+    const timeLimit = 10;
     const leaderboard = [];
     let userName = '';
     let theme = 'light';
@@ -264,7 +264,7 @@
             document.getElementById('time-left').textContent = timeLeft;
             if (timeLeft <= 0) {
                 clearInterval(timer);
-                showNextQuestion();
+                document.getElementById('next-btn').classList.remove('hidden');
             }
         }, 1000);
     }
@@ -311,11 +311,7 @@
             playSound('incorrect');
         }
 
-        if (currentQuestionIndex < questions.length - 1) {
-            document.getElementById('next-btn').classList.remove('hidden');
-        } else {
-            document.getElementById('submit-btn').classList.remove('hidden');
-        }
+        document.getElementById('next-btn').classList.remove('hidden');
         clearInterval(timer);
     }
 
