@@ -88,10 +88,6 @@
         .progress {
             margin-bottom: 15px;
         }
-        .timer {
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
         #leaderboard {
             position: absolute;
             top: 20px;
@@ -163,7 +159,6 @@
         <div class="progress-bar">
             <div class="progress-bar-inner" id="progress-bar-inner"></div>
         </div>
-        <div class="timer" id="timer">Tid igjen: <span id="time-left">10</span> sekunder</div>
         <div id="question" class="question"></div>
         <div id="answers"></div>
         <button class="next-btn hidden" id="next-btn" onclick="showNextQuestion()">Neste spørsmål</button>
@@ -229,9 +224,6 @@
 
     let currentQuestionIndex = 0;
     let score = 0;
-    let timer;
-    let timeLeft = 10;
-    const timeLimit = 10;
     const leaderboard = [];
     let userName = '';
     let theme = 'light';
@@ -253,25 +245,9 @@
         currentQuestionIndex = 0;
         score = 0;
         showQuestion(questions[currentQuestionIndex]);
-        startTimer();
-    }
-
-    function startTimer() {
-        timeLeft = timeLimit;
-        document.getElementById('time-left').textContent = timeLeft;
-        timer = setInterval(() => {
-            timeLeft--;
-            document.getElementById('time-left').textContent = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                document.getElementById('next-btn').classList.remove('hidden');
-            }
-        }, 1000);
     }
 
     function showQuestion(question) {
-        clearInterval(timer);
-        startTimer();
         const questionElement = document.getElementById('question');
         const answersElement = document.getElementById('answers');
         document.getElementById('current-question').textContent = currentQuestionIndex + 1;
@@ -280,7 +256,7 @@
         questionElement.innerHTML = `<h3>${question.question}</h3>`;
         answersElement.innerHTML = '';
 
-        question.answers.forEach((answer, index) => {
+        question.answers.forEach(answer => {
             const button = document.createElement('button');
             button.classList.add('answer');
             button.textContent = answer.text;
@@ -298,26 +274,14 @@
             btn.disabled = true;
             if (btn === button) {
                 btn.classList.add(answer.correct ? 'correct' : 'incorrect');
-            } else if (answer.correct && btn.textContent === answer.text) {
-                btn.classList.add('correct');
             }
         });
 
         if (answer.correct) {
             score += 10;
-            playSound('correct');
-        } else {
-            score -= 5;
-            playSound('incorrect');
         }
 
         document.getElementById('next-btn').classList.remove('hidden');
-        clearInterval(timer);
-    }
-
-    function playSound(type) {
-        const audio = new Audio(type === 'correct' ? 'correct-sound.mp3' : 'incorrect-sound.mp3');
-        audio.play();
     }
 
     function showNextQuestion() {
