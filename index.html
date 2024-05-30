@@ -478,7 +478,7 @@
     function submitQuiz() {
         const endTime = new Date();
         const timeUsed = Math.round((endTime - startTime) / 1000);
-        const message = score >= 80 ? 'Gratulerer! Du har bestått quizen!' : 'Du har ikke bestått quizen. Prøv igjen!';
+        const message = 'Takk for at du deltok! Her er dine resultater.';
         alert(`Du fikk ${score} poeng! ${message}`);
         document.getElementById('user-score').textContent = score;
         document.getElementById('total-time').textContent = timeUsed;
