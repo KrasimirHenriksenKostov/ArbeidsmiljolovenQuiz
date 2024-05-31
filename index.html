@@ -516,10 +516,9 @@
             showExplanation(questions[selectedCategory][currentQuestionIndex].explanation);
         }
 
+        document.getElementById('next-btn').classList.remove('hidden');
         if (currentQuestionIndex === questions[selectedCategory].length - 1) {
             document.getElementById('submit-btn').classList.remove('hidden');
-        } else {
-            document.getElementById('next-btn').classList.remove('hidden');
         }
     }
 
