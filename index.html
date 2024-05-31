@@ -487,6 +487,7 @@
 
         document.getElementById('next-btn').classList.add('hidden');
         document.getElementById('submit-btn').classList.add('hidden');
+        updateLeaderboardDisplay(false);
     }
 
     function selectAnswer(answer, button) {
@@ -546,7 +547,7 @@
         document.getElementById('user-score').textContent = score;
         document.getElementById('total-time').textContent = timeUsed;
         displayDetailedResults();
-        updateLeaderboard();
+        updateLeaderboard(true);
         document.getElementById('profile-section').classList.remove('hidden');
         document.getElementById('question-container').classList.add('hidden');
     }
@@ -568,14 +569,34 @@
         `;
     }
 
-    function updateLeaderboard() {
+    function updateLeaderboard(final = false) {
         const leaderboardList = document.getElementById('leaderboard-list');
         leaderboardList.innerHTML = '';
         leaderboard.push({ name: userName, score: score, time: Math.round((new Date() - startTime) / 1000) });
         leaderboard.sort((a, b) => b.score - a.score || a.time - b.time);
-        leaderboard = leaderboard.slice(0, 10);
+        if (final) {
+            leaderboard = leaderboard.slice(0, 50);
+        } else {
+            leaderboard = leaderboard.slice(0, 10);
+        }
         localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
         leaderboard.forEach(entry => {
+            const li = document.createElement('li');
+            li.textContent = `${entry.name}: ${entry.score} poeng på ${entry.time} sekunder`;
+            leaderboardList.appendChild(li);
+        });
+    }
+
+    function updateLeaderboardDisplay(final = false) {
+        const leaderboardList = document.getElementById('leaderboard-list');
+        leaderboardList.innerHTML = '';
+        let displayLeaderboard = [...leaderboard];
+        if (final) {
+            displayLeaderboard = displayLeaderboard.slice(0, 50);
+        } else {
+            displayLeaderboard = displayLeaderboard.slice(0, 10);
+        }
+        displayLeaderboard.forEach(entry => {
             const li = document.createElement('li');
             li.textContent = `${entry.name}: ${entry.score} poeng på ${entry.time} sekunder`;
             leaderboardList.appendChild(li);
