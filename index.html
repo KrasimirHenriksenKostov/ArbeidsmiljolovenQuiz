@@ -204,6 +204,7 @@
         <p>Poeng: <span id="user-score">0</span></p>
         <p>Tid brukt: <span id="total-time">0</span> sekunder</p>
         <div id="detailed-results"></div>
+        <p>Takk for at du tok QuizMaster!</p>
         <button onclick="restartQuiz()">Start på nytt</button>
         <button class="theme-btn" onclick="toggleTheme()">Bytt tema</button>
         <button class="share-btn" onclick="shareResult()">Del resultat</button>
@@ -432,7 +433,7 @@
     let selectedCategory = '';
     let currentQuestionIndex = 0;
     let score = 0;
-    let leaderboard = [];
+    let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
     let userName = '';
     let theme = 'light';
     let startTime = null;
@@ -558,6 +559,8 @@
         leaderboardList.innerHTML = '';
         leaderboard.push({ name: userName, score: score, time: Math.round((new Date() - startTime) / 1000) });
         leaderboard.sort((a, b) => b.score - a.score || a.time - b.time);
+        leaderboard = leaderboard.slice(0, 10);
+        localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
         leaderboard.forEach(entry => {
             const li = document.createElement('li');
             li.textContent = `${entry.name}: ${entry.score} poeng på ${entry.time} sekunder`;
