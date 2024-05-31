@@ -186,7 +186,7 @@
     </div>
     <div class="quiz-section hidden" id="quiz-section">
         <h2>Velg en kategori</h2>
-        <button class="btn" onclick="selectCategory('Arbeidsrett')">Arbeidsrett</button>
+        <button class="btn" onclick="selectCategory('Oppsigelse og nedbemanning')">Oppsigelse og nedbemanning</button>
     </div>
 
     <div id="question-container" class="hidden">
@@ -227,7 +227,7 @@
 
 <script>
     const questions = {
-        "Arbeidsrett": [
+        "Oppsigelse og nedbemanning": [
             {
                 question: "Hva er hovedforpliktelsen til arbeidstakeren i et arbeidsforhold?",
                 answers: [
@@ -236,7 +236,7 @@
                     { text: "C. Sørge for et godt arbeidsmiljø", correct: false },
                     { text: "D. Rekruttere nye ansatte", correct: false }
                 ],
-                explanation: "Hovedforpliktelsen til arbeidstakeren er å stille sin arbeidskraft til disposisjon i henhold til arbeidsavtalen."
+                explanation: "Hovedforpliktelsen til arbeidstakeren er å stille sin arbeidskraft til disposisjon i henhold til arbeidsavtalen. Se Arbeidsmiljøloven § 2-1."
             },
             {
                 question: "Hva er hovedforpliktelsen til arbeidsgiveren i et arbeidsforhold?",
@@ -246,7 +246,7 @@
                     { text: "C. Utbetale vederlaget (lønn)", correct: true },
                     { text: "D. Sette opp arbeidsplaner", correct: false }
                 ],
-                explanation: "Arbeidsgiveren har plikt til å betale arbeidstakeren vederlaget for utført arbeid."
+                explanation: "Arbeidsgiveren har plikt til å betale arbeidstakeren vederlaget for utført arbeid. Se Arbeidsmiljøloven § 14-15."
             },
             {
                 question: "Hva omfatter individuell arbeidsrett?",
@@ -256,7 +256,7 @@
                     { text: "C. Inngåelse av arbeidsavtaler", correct: true },
                     { text: "D. Lockout", correct: false }
                 ],
-                explanation: "Individuell arbeidsrett omfatter inngåelse av arbeidsavtaler."
+                explanation: "Individuell arbeidsrett omfatter inngåelse av arbeidsavtaler. Se Arbeidsmiljøloven § 14-5."
             },
             {
                 question: "Hvilken lov gir vern mot usaklig oppsigelse?",
@@ -266,7 +266,7 @@
                     { text: "C. Likestillings- og diskrimineringsloven", correct: false },
                     { text: "D. Folketrygdloven", correct: false }
                 ],
-                explanation: "Arbeidsmiljøloven gir vern mot usaklig oppsigelse."
+                explanation: "Arbeidsmiljøloven gir vern mot usaklig oppsigelse. Se Arbeidsmiljøloven § 15-7."
             },
             {
                 question: "Hva er et viktig element i saklig oppsigelse?",
@@ -276,7 +276,7 @@
                     { text: "C. EØS-avtalen", correct: false },
                     { text: "D. Folketrygdens bestemmelser", correct: false }
                 ],
-                explanation: "Arbeidstakers forhold er et viktig element i saklig oppsigelse."
+                explanation: "Arbeidstakers forhold er et viktig element i saklig oppsigelse. Se Arbeidsmiljøloven § 15-7."
             },
             {
                 question: "Hva må arbeidsgiver vurdere ved en oppsigelse på grunn av virksomhetens forhold?",
@@ -286,7 +286,7 @@
                     { text: "C. Om det finnes annet passende arbeid", correct: true },
                     { text: "D. Tariffavtalens bestemmelser", correct: false }
                 ],
-                explanation: "Arbeidsgiver må vurdere om det finnes annet passende arbeid ved en oppsigelse på grunn av virksomhetens forhold."
+                explanation: "Arbeidsgiver må vurdere om det finnes annet passende arbeid. Se Arbeidsmiljøloven § 15-7."
             },
             {
                 question: "Hvilken paragraf i arbeidsmiljøloven omhandler vern mot usaklig oppsigelse?",
@@ -296,7 +296,7 @@
                     { text: "C. § 15-7", correct: true },
                     { text: "D. § 15-1", correct: false }
                 ],
-                explanation: "§ 15-7 i arbeidsmiljøloven omhandler vern mot usaklig oppsigelse."
+                explanation: "§ 15-7 i arbeidsmiljøloven omhandler vern mot usaklig oppsigelse. Se Arbeidsmiljøloven § 15-7."
             },
             {
                 question: "Hva er en viktig prosess ved oppsigelse på grunn av virksomhetens forhold?",
@@ -306,7 +306,7 @@
                     { text: "C. Informasjon til fagforeningen", correct: false },
                     { text: "D. Søksmål", correct: false }
                 ],
-                explanation: "Individuelle drøftelsesmøter er en viktig prosess ved oppsigelse på grunn av virksomhetens forhold."
+                explanation: "Individuelle drøftelsesmøter er en viktig prosess ved oppsigelse på grunn av virksomhetens forhold. Se Arbeidsmiljøloven § 15-1."
             },
             {
                 question: "Hvilket dokument må arbeidsgiver opprette ved en nedbemanning?",
@@ -316,7 +316,7 @@
                     { text: "C. Sluttvederlag", correct: false },
                     { text: "D. Ferieplan", correct: false }
                 ],
-                explanation: "Arbeidsgiver må opprette et oppsigelsesbrev ved en nedbemanning."
+                explanation: "Arbeidsgiver må opprette et oppsigelsesbrev ved en nedbemanning. Se Arbeidsmiljøloven § 15-4."
             },
             {
                 question: "Hva innebærer 'annet passende arbeid'?",
@@ -326,7 +326,7 @@
                     { text: "C. Avskjed", correct: false },
                     { text: "D. Sluttavtale", correct: false }
                 ],
-                explanation: "'Annet passende arbeid' innebærer et arbeid likt det opprinnelige."
+                explanation: "'Annet passende arbeid' innebærer et arbeid likt det opprinnelige. Se Arbeidsmiljøloven § 15-7."
             },
             {
                 question: "Hva skal arbeidsgiver gjøre før en oppsigelse på grunn av virksomhetens forhold?",
@@ -336,7 +336,7 @@
                     { text: "C. Avholde drøftelsesmøter", correct: true },
                     { text: "D. Redusere lønn", correct: false }
                 ],
-                explanation: "Arbeidsgiver skal avholde drøftelsesmøter før en oppsigelse på grunn av virksomhetens forhold."
+                explanation: "Arbeidsgiver skal avholde drøftelsesmøter før en oppsigelse på grunn av virksomhetens forhold. Se Arbeidsmiljøloven § 15-1."
             },
             {
                 question: "Hva er formålet med fortrinnsrett?",
@@ -346,7 +346,7 @@
                     { text: "C. Fremme tariffavtaler", correct: false },
                     { text: "D. Redusere sykefravær", correct: false }
                 ],
-                explanation: "Formålet med fortrinnsrett er å motvirke urettferdig oppsigelse."
+                explanation: "Formålet med fortrinnsrett er å motvirke urettferdig oppsigelse. Se Arbeidsmiljøloven § 14-2."
             },
             {
                 question: "Hva er en konsekvens av å inngå en sluttavtale?",
@@ -356,7 +356,7 @@
                     { text: "C. Endelig oppgjør av alle rettigheter og plikter", correct: true },
                     { text: "D. Plikt til å informere arbeidsgiver om fremtidige jobbsøknader", correct: false }
                 ],
-                explanation: "En konsekvens av å inngå en sluttavtale er et endelig oppgjør av alle rettigheter og plikter."
+                explanation: "En konsekvens av å inngå en sluttavtale er et endelig oppgjør av alle rettigheter og plikter. Se Arbeidsmiljøloven § 15-7."
             },
             {
                 question: "Hvem kan være arbeidstakerpart i kollektiv arbeidsrett?",
@@ -366,7 +366,7 @@
                     { text: "C. Statlige myndigheter", correct: false },
                     { text: "D. Bedriftsledelsen", correct: false }
                 ],
-                explanation: "Fagforeninger kan være arbeidstakerpart i kollektiv arbeidsrett."
+                explanation: "Fagforeninger kan være arbeidstakerpart i kollektiv arbeidsrett. Se Arbeidstvistloven § 1."
             },
             {
                 question: "Hva skal arbeidsgiver gjøre ved masseoppsigelser?",
@@ -376,7 +376,7 @@
                     { text: "C. Drøfte med tillitsvalgte", correct: true },
                     { text: "D. Avholde møter med hver enkelt ansatt", correct: false }
                 ],
-                explanation: "Arbeidsgiver skal drøfte med tillitsvalgte ved masseoppsigelser."
+                explanation: "Arbeidsgiver skal drøfte med tillitsvalgte ved masseoppsigelser. Se Arbeidsmiljøloven § 15-2."
             },
             {
                 question: "Hva kan utløse strafferettslig ansvar innen arbeidsretten?",
@@ -386,7 +386,7 @@
                     { text: "C. Manglende arbeidsmiljøtiltak", correct: false },
                     { text: "D. Brudd på tariffavtaler", correct: false }
                 ],
-                explanation: "Usaklig oppsigelse kan utløse strafferettslig ansvar innen arbeidsretten."
+                explanation: "Usaklig oppsigelse kan utløse strafferettslig ansvar innen arbeidsretten. Se Arbeidsmiljøloven § 19-1."
             },
             {
                 question: "Hva er et eksempel på virksomhetens forhold som kan begrunne oppsigelse?",
@@ -396,7 +396,7 @@
                     { text: "C. Arbeidstakers adferd", correct: false },
                     { text: "D. Arbeidstakers alder", correct: false }
                 ],
-                explanation: "Omstilling er et eksempel på virksomhetens forhold som kan begrunne oppsigelse."
+                explanation: "Omstilling er et eksempel på virksomhetens forhold som kan begrunne oppsigelse. Se Arbeidsmiljøloven § 15-7."
             },
             {
                 question: "Hva må arbeidsgiver gjøre i forkant av en nedbemanning?",
@@ -406,7 +406,7 @@
                     { text: "C. Vurdere behovet for nedbemanning", correct: true },
                     { text: "D. Informere Arbeidstilsynet", correct: false }
                 ],
-                explanation: "Arbeidsgiver må vurdere behovet for nedbemanning i forkant av en nedbemanning."
+                explanation: "Arbeidsgiver må vurdere behovet for nedbemanning i forkant av en nedbemanning. Se Arbeidsmiljøloven § 15-7."
             },
             {
                 question: "Hva må arbeidsgiver dokumentere ved en nedbemanning?",
@@ -416,7 +416,7 @@
                     { text: "C. Saklig grunn for endringer i bedriften", correct: true },
                     { text: "D. Arbeidstakers kompetanse", correct: false }
                 ],
-                explanation: "Arbeidsgiver må dokumentere saklig grunn for endringer i bedriften ved en nedbemanning."
+                explanation: "Arbeidsgiver må dokumentere saklig grunn for endringer i bedriften ved en nedbemanning. Se Arbeidsmiljøloven § 15-7."
             },
             {
                 question: "Hva innebærer interesseavveining ved oppsigelse?",
@@ -426,7 +426,7 @@
                     { text: "C. Vurdere arbeidstakers lønn", correct: false },
                     { text: "D. Redusere antall ansatte", correct: false }
                 ],
-                explanation: "Interesseavveining ved oppsigelse innebærer å sammenligne arbeidstakers interesser med virksomhetens behov."
+                explanation: "Interesseavveining ved oppsigelse innebærer å sammenligne arbeidstakers interesser med virksomhetens behov. Se Arbeidsmiljøloven § 15-7."
             }
         ]
     };
