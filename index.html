@@ -7,8 +7,6 @@
     <meta property="og:title" content="QuizMaster - Powerpoint oppsigelse nedbemanning">
     <meta property="og:description" content="Velkommen til QuizMaster! Test dine kunnskaper med vår quiz.">
     <style>
-        <audio id="correct-sound" src="You got this.mp3"></audio>
-<audio id="incorrect-sound" src="You got this.mp3"></audio>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -178,6 +176,8 @@
     <a href="#main-content" class="skip-link">Hopp til hovedinnhold</a>
 </header>
 
+<audio id="background-music" src="You got this.mp3" autoplay loop></audio>
+
 <div id="main-content" class="container">
     <div class="name-input" id="name-input">
         <label for="username">Skriv inn navnet ditt:</label>
@@ -224,9 +224,6 @@
 <footer>
     <p>&copy; 2024 QuizMaster. Alle rettigheter reservert. Quizen er laget av Krasimir Henriksen Kostov. <a href="https://www.linkedin.com/in/krasimir-henriksen-kostov" target="_blank">LinkedIn profil</a>.</p>
 </footer>
-
-<audio id="correct-sound" src="You got this.mp3"></audio>
-<audio id="incorrect-sound" src="You got this.mp3"></audio>
 
 <script>
     const questions = {
