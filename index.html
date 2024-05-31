@@ -18,9 +18,10 @@
             justify-content: center;
             min-height: 100vh;
             font-size: 18px;
+            color: #000;
         }
         header {
-            background-color: #4CAF50;
+            background-color: #6200ea;
             color: white;
             padding: 20px;
             text-align: center;
@@ -61,14 +62,15 @@
             transition: background-color 0.3s;
             cursor: pointer;
         }
-        .answer:hover {
+        .answer:hover, .answer:focus {
             background-color: #f1f1f1;
+            outline: 2px solid #6200ea;
         }
         .hidden {
             display: none;
         }
-        .start-btn, .next-btn, .submit-btn, .theme-btn, .share-btn, .feedback-btn {
-            background-color: #2196F3;
+        .btn {
+            background-color: #03dac6;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -78,8 +80,8 @@
             transition: background-color 0.3s;
             margin-top: 20px;
         }
-        .start-btn:hover, .next-btn:hover, .submit-btn:hover, .theme-btn:hover, .share-btn:hover, .feedback-btn:hover {
-            background-color: #1976D2;
+        .btn:hover {
+            background-color: #028c83;
         }
         .correct {
             background-color: green;
@@ -117,11 +119,11 @@
             border-radius: 5px;
             transition: background-color 0.3s;
             border: none;
-            background-color: #2196F3;
+            background-color: #03dac6;
             color: white;
         }
         .name-input button:hover {
-            background-color: #1976D2;
+            background-color: #028c83;
         }
         .progress-bar {
             width: 100%;
@@ -144,7 +146,7 @@
                 padding: 5px;
                 font-size: 12px;
             }
-            .start-btn, .next-btn, .submit-btn, .theme-btn, .share-btn, .feedback-btn {
+            .btn {
                 font-size: 16px;
                 padding: 8px 16px;
             }
@@ -153,28 +155,16 @@
                 padding: 8px;
             }
         }
-        .blue-theme {
-            background-color: #2196F3;
-            color: white;
-        }
-        .blue-theme .start-btn, .blue-theme .next-btn, .blue-theme .submit-btn, .blue-theme .theme-btn, .blue-theme .share-btn, .blue-theme .feedback-btn {
-            background-color: #1E88E5;
-        }
-        .blue-theme .start-btn:hover, .blue-theme .next-btn:hover, .blue-theme .submit-btn:hover, .blue-theme .theme-btn:hover, .blue-theme .share-btn:hover, .blue-theme .feedback-btn:hover {
-            background-color: #1565C0;
-        }
-        .blue-theme .progress-bar-inner {
-            background-color: #1E88E5;
-        }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Velkommen til QuizMaster</h1>
+    <a href="#main-content" class="skip-link">Hopp til hovedinnhold</a>
 </header>
 
-<div class="container">
+<div id="main-content" class="container">
     <div class="name-input" id="name-input">
         <label for="username">Skriv inn navnet ditt:</label>
         <input type="text" id="username" placeholder="Ditt navn">
@@ -182,7 +172,7 @@
     </div>
     <div class="quiz-section hidden" id="quiz-section">
         <h2>Velg en kategori</h2>
-        <button class="start-btn" onclick="selectCategory('Arbeidsrett')">Arbeidsrett</button>
+        <button class="btn" onclick="selectCategory('Arbeidsrett')">Arbeidsrett</button>
     </div>
 
     <div id="question-container" class="hidden">
@@ -195,8 +185,8 @@
         <div id="timer">Tid brukt: <span id="time-used">0</span> sekunder</div>
         <div id="question" class="question"></div>
         <div id="answers"></div>
-        <button class="next-btn hidden" id="next-btn" onclick="showNextQuestion()">Neste spørsmål</button>
-        <button class="submit-btn hidden" id="submit-btn" onclick="submitQuiz()">Send inn svar</button>
+        <button class="btn hidden" id="next-btn" onclick="showNextQuestion()">Neste spørsmål</button>
+        <button class="btn hidden" id="submit-btn" onclick="submitQuiz()">Send inn svar</button>
     </div>
 
     <div class="profile-section hidden" id="profile-section">
@@ -205,10 +195,10 @@
         <p>Tid brukt: <span id="total-time">0</span> sekunder</p>
         <div id="detailed-results"></div>
         <p>Takk for at du tok QuizMaster!</p>
-        <button onclick="restartQuiz()">Start på nytt</button>
-        <button class="theme-btn" onclick="toggleTheme()">Bytt tema</button>
-        <button class="share-btn" onclick="shareResult()">Del resultat</button>
-        <button class="feedback-btn" onclick="provideFeedback()">Gi tilbakemelding</button>
+        <button class="btn" onclick="restartQuiz()">Start på nytt</button>
+        <button class="btn" onclick="toggleTheme()">Bytt tema</button>
+        <button class="btn" onclick="shareResult()">Del resultat</button>
+        <button class="btn" onclick="provideFeedback()">Gi tilbakemelding</button>
     </div>
 </div>
 
@@ -230,200 +220,200 @@
             {
                 question: "Hva er hovedforpliktelsen til arbeidstakeren i et arbeidsforhold?",
                 answers: [
-                    { text: "Utbetale vederlaget", correct: false },
-                    { text: "Stille sin arbeidskraft til disposisjon", correct: true },
-                    { text: "Sørge for et godt arbeidsmiljø", correct: false },
-                    { text: "Rekruttere nye ansatte", correct: false }
+                    { text: "A. Utbetale vederlaget", correct: false },
+                    { text: "B. Stille sin arbeidskraft til disposisjon", correct: true },
+                    { text: "C. Sørge for et godt arbeidsmiljø", correct: false },
+                    { text: "D. Rekruttere nye ansatte", correct: false }
                 ],
                 explanation: "Hovedforpliktelsen til arbeidstakeren er å stille sin arbeidskraft til disposisjon i henhold til arbeidsavtalen."
             },
             {
                 question: "Hva er hovedforpliktelsen til arbeidsgiveren i et arbeidsforhold?",
                 answers: [
-                    { text: "Tilby opplæring", correct: false },
-                    { text: "Stille sin arbeidskraft til disposisjon", correct: false },
-                    { text: "Utbetale vederlaget (lønn)", correct: true },
-                    { text: "Sette opp arbeidsplaner", correct: false }
+                    { text: "A. Tilby opplæring", correct: false },
+                    { text: "B. Stille sin arbeidskraft til disposisjon", correct: false },
+                    { text: "C. Utbetale vederlaget (lønn)", correct: true },
+                    { text: "D. Sette opp arbeidsplaner", correct: false }
                 ],
                 explanation: "Arbeidsgiveren har plikt til å betale arbeidstakeren vederlaget for utført arbeid."
             },
             {
                 question: "Hva omfatter individuell arbeidsrett?",
                 answers: [
-                    { text: "Tariffavtaler", correct: false },
-                    { text: "Boikott", correct: false },
-                    { text: "Inngåelse av arbeidsavtaler", correct: true },
-                    { text: "Lockout", correct: false }
+                    { text: "A. Tariffavtaler", correct: false },
+                    { text: "B. Boikott", correct: false },
+                    { text: "C. Inngåelse av arbeidsavtaler", correct: true },
+                    { text: "D. Lockout", correct: false }
                 ],
                 explanation: "Individuell arbeidsrett omfatter inngåelse av arbeidsavtaler."
             },
             {
                 question: "Hvilken lov gir vern mot usaklig oppsigelse?",
                 answers: [
-                    { text: "Ferieloven", correct: false },
-                    { text: "Arbeidsmiljøloven", correct: true },
-                    { text: "Likestillings- og diskrimineringsloven", correct: false },
-                    { text: "Folketrygdloven", correct: false }
+                    { text: "A. Ferieloven", correct: false },
+                    { text: "B. Arbeidsmiljøloven", correct: true },
+                    { text: "C. Likestillings- og diskrimineringsloven", correct: false },
+                    { text: "D. Folketrygdloven", correct: false }
                 ],
                 explanation: "Arbeidsmiljøloven gir vern mot usaklig oppsigelse."
             },
             {
                 question: "Hva er et viktig element i saklig oppsigelse?",
                 answers: [
-                    { text: "Arbeidstakers forhold", correct: true },
-                    { text: "Tariffavtaler", correct: false },
-                    { text: "EØS-avtalen", correct: false },
-                    { text: "Folketrygdens bestemmelser", correct: false }
+                    { text: "A. Arbeidstakers forhold", correct: true },
+                    { text: "B. Tariffavtaler", correct: false },
+                    { text: "C. EØS-avtalen", correct: false },
+                    { text: "D. Folketrygdens bestemmelser", correct: false }
                 ],
                 explanation: "Arbeidstakers forhold er et viktig element i saklig oppsigelse."
             },
             {
                 question: "Hva må arbeidsgiver vurdere ved en oppsigelse på grunn av virksomhetens forhold?",
                 answers: [
-                    { text: "Konsernets behov", correct: false },
-                    { text: "Arbeidstakers alder", correct: false },
-                    { text: "Om det finnes annet passende arbeid", correct: true },
-                    { text: "Tariffavtalens bestemmelser", correct: false }
+                    { text: "A. Konsernets behov", correct: false },
+                    { text: "B. Arbeidstakers alder", correct: false },
+                    { text: "C. Om det finnes annet passende arbeid", correct: true },
+                    { text: "D. Tariffavtalens bestemmelser", correct: false }
                 ],
                 explanation: "Arbeidsgiver må vurdere om det finnes annet passende arbeid ved en oppsigelse på grunn av virksomhetens forhold."
             },
             {
                 question: "Hvilken paragraf i arbeidsmiljøloven omhandler vern mot usaklig oppsigelse?",
                 answers: [
-                    { text: "§ 14-2", correct: false },
-                    { text: "§ 1-9", correct: false },
-                    { text: "§ 15-7", correct: true },
-                    { text: "§ 15-1", correct: false }
+                    { text: "A. § 14-2", correct: false },
+                    { text: "B. § 1-9", correct: false },
+                    { text: "C. § 15-7", correct: true },
+                    { text: "D. § 15-1", correct: false }
                 ],
                 explanation: "§ 15-7 i arbeidsmiljøloven omhandler vern mot usaklig oppsigelse."
             },
             {
                 question: "Hva er en viktig prosess ved oppsigelse på grunn av virksomhetens forhold?",
                 answers: [
-                    { text: "Tilbud om sluttavtale", correct: false },
-                    { text: "Individuelle drøftelsesmøter", correct: true },
-                    { text: "Informasjon til fagforeningen", correct: false },
-                    { text: "Søksmål", correct: false }
+                    { text: "A. Tilbud om sluttavtale", correct: false },
+                    { text: "B. Individuelle drøftelsesmøter", correct: true },
+                    { text: "C. Informasjon til fagforeningen", correct: false },
+                    { text: "D. Søksmål", correct: false }
                 ],
                 explanation: "Individuelle drøftelsesmøter er en viktig prosess ved oppsigelse på grunn av virksomhetens forhold."
             },
             {
                 question: "Hvilket dokument må arbeidsgiver opprette ved en nedbemanning?",
                 answers: [
-                    { text: "Tariffavtale", correct: false },
-                    { text: "Oppsigelsesbrev", correct: true },
-                    { text: "Sluttvederlag", correct: false },
-                    { text: "Ferieplan", correct: false }
+                    { text: "A. Tariffavtale", correct: false },
+                    { text: "B. Oppsigelsesbrev", correct: true },
+                    { text: "C. Sluttvederlag", correct: false },
+                    { text: "D. Ferieplan", correct: false }
                 ],
                 explanation: "Arbeidsgiver må opprette et oppsigelsesbrev ved en nedbemanning."
             },
             {
                 question: "Hva innebærer 'annet passende arbeid'?",
                 answers: [
-                    { text: "Opprettelse av ny stilling", correct: false },
-                    { text: "Et arbeid likt det opprinnelige", correct: true },
-                    { text: "Avskjed", correct: false },
-                    { text: "Sluttavtale", correct: false }
+                    { text: "A. Opprettelse av ny stilling", correct: false },
+                    { text: "B. Et arbeid likt det opprinnelige", correct: true },
+                    { text: "C. Avskjed", correct: false },
+                    { text: "D. Sluttavtale", correct: false }
                 ],
                 explanation: "'Annet passende arbeid' innebærer et arbeid likt det opprinnelige."
             },
             {
                 question: "Hva skal arbeidsgiver gjøre før en oppsigelse på grunn av virksomhetens forhold?",
                 answers: [
-                    { text: "Tilby sluttpakker", correct: false },
-                    { text: "Foreta en interesseavveining", correct: false },
-                    { text: "Avholde drøftelsesmøter", correct: true },
-                    { text: "Redusere lønn", correct: false }
+                    { text: "A. Tilby sluttpakker", correct: false },
+                    { text: "B. Foreta en interesseavveining", correct: false },
+                    { text: "C. Avholde drøftelsesmøter", correct: true },
+                    { text: "D. Redusere lønn", correct: false }
                 ],
                 explanation: "Arbeidsgiver skal avholde drøftelsesmøter før en oppsigelse på grunn av virksomhetens forhold."
             },
             {
                 question: "Hva er formålet med fortrinnsrett?",
                 answers: [
-                    { text: "Øke lønnsomheten", correct: false },
-                    { text: "Motvirke urettferdig oppsigelse", correct: true },
-                    { text: "Fremme tariffavtaler", correct: false },
-                    { text: "Redusere sykefravær", correct: false }
+                    { text: "A. Øke lønnsomheten", correct: false },
+                    { text: "B. Motvirke urettferdig oppsigelse", correct: true },
+                    { text: "C. Fremme tariffavtaler", correct: false },
+                    { text: "D. Redusere sykefravær", correct: false }
                 ],
                 explanation: "Formålet med fortrinnsrett er å motvirke urettferdig oppsigelse."
             },
             {
                 question: "Hva er en konsekvens av å inngå en sluttavtale?",
                 answers: [
-                    { text: "Fortsatt ansettelse", correct: false },
-                    { text: "Fortrinnsrett til ny stilling", correct: false },
-                    { text: "Endelig oppgjør av alle rettigheter og plikter", correct: true },
-                    { text: "Plikt til å informere arbeidsgiver om fremtidige jobbsøknader", correct: false }
+                    { text: "A. Fortsatt ansettelse", correct: false },
+                    { text: "B. Fortrinnsrett til ny stilling", correct: false },
+                    { text: "C. Endelig oppgjør av alle rettigheter og plikter", correct: true },
+                    { text: "D. Plikt til å informere arbeidsgiver om fremtidige jobbsøknader", correct: false }
                 ],
                 explanation: "En konsekvens av å inngå en sluttavtale er et endelig oppgjør av alle rettigheter og plikter."
             },
             {
                 question: "Hvem kan være arbeidstakerpart i kollektiv arbeidsrett?",
                 answers: [
-                    { text: "Enkeltarbeidstakere", correct: false },
-                    { text: "Fagforeninger", correct: true },
-                    { text: "Statlige myndigheter", correct: false },
-                    { text: "Bedriftsledelsen", correct: false }
+                    { text: "A. Enkeltarbeidstakere", correct: false },
+                    { text: "B. Fagforeninger", correct: true },
+                    { text: "C. Statlige myndigheter", correct: false },
+                    { text: "D. Bedriftsledelsen", correct: false }
                 ],
                 explanation: "Fagforeninger kan være arbeidstakerpart i kollektiv arbeidsrett."
             },
             {
                 question: "Hva skal arbeidsgiver gjøre ved masseoppsigelser?",
                 answers: [
-                    { text: "Informere pressen", correct: false },
-                    { text: "Tilby høyere lønn", correct: false },
-                    { text: "Drøfte med tillitsvalgte", correct: true },
-                    { text: "Avholde møter med hver enkelt ansatt", correct: false }
+                    { text: "A. Informere pressen", correct: false },
+                    { text: "B. Tilby høyere lønn", correct: false },
+                    { text: "C. Drøfte med tillitsvalgte", correct: true },
+                    { text: "D. Avholde møter med hver enkelt ansatt", correct: false }
                 ],
                 explanation: "Arbeidsgiver skal drøfte med tillitsvalgte ved masseoppsigelser."
             },
             {
                 question: "Hva kan utløse strafferettslig ansvar innen arbeidsretten?",
                 answers: [
-                    { text: "Manglende lønnsutbetaling", correct: false },
-                    { text: "Usaklig oppsigelse", correct: true },
-                    { text: "Manglende arbeidsmiljøtiltak", correct: false },
-                    { text: "Brudd på tariffavtaler", correct: false }
+                    { text: "A. Manglende lønnsutbetaling", correct: false },
+                    { text: "B. Usaklig oppsigelse", correct: true },
+                    { text: "C. Manglende arbeidsmiljøtiltak", correct: false },
+                    { text: "D. Brudd på tariffavtaler", correct: false }
                 ],
                 explanation: "Usaklig oppsigelse kan utløse strafferettslig ansvar innen arbeidsretten."
             },
             {
                 question: "Hva er et eksempel på virksomhetens forhold som kan begrunne oppsigelse?",
                 answers: [
-                    { text: "Sykefravær", correct: false },
-                    { text: "Omstilling", correct: true },
-                    { text: "Arbeidstakers adferd", correct: false },
-                    { text: "Arbeidstakers alder", correct: false }
+                    { text: "A. Sykefravær", correct: false },
+                    { text: "B. Omstilling", correct: true },
+                    { text: "C. Arbeidstakers adferd", correct: false },
+                    { text: "D. Arbeidstakers alder", correct: false }
                 ],
                 explanation: "Omstilling er et eksempel på virksomhetens forhold som kan begrunne oppsigelse."
             },
             {
                 question: "Hva må arbeidsgiver gjøre i forkant av en nedbemanning?",
                 answers: [
-                    { text: "Redusere arbeidsmiljøtiltak", correct: false },
-                    { text: "Ansette nye medarbeidere", correct: false },
-                    { text: "Vurdere behovet for nedbemanning", correct: true },
-                    { text: "Informere Arbeidstilsynet", correct: false }
+                    { text: "A. Redusere arbeidsmiljøtiltak", correct: false },
+                    { text: "B. Ansette nye medarbeidere", correct: false },
+                    { text: "C. Vurdere behovet for nedbemanning", correct: true },
+                    { text: "D. Informere Arbeidstilsynet", correct: false }
                 ],
                 explanation: "Arbeidsgiver må vurdere behovet for nedbemanning i forkant av en nedbemanning."
             },
             {
                 question: "Hva må arbeidsgiver dokumentere ved en nedbemanning?",
                 answers: [
-                    { text: "Økonomisk tap", correct: false },
-                    { text: "Arbeidstakers sykefravær", correct: false },
-                    { text: "Saklig grunn for endringer i bedriften", correct: true },
-                    { text: "Arbeidstakers kompetanse", correct: false }
+                    { text: "A. Økonomisk tap", correct: false },
+                    { text: "B. Arbeidstakers sykefravær", correct: false },
+                    { text: "C. Saklig grunn for endringer i bedriften", correct: true },
+                    { text: "D. Arbeidstakers kompetanse", correct: false }
                 ],
                 explanation: "Arbeidsgiver må dokumentere saklig grunn for endringer i bedriften ved en nedbemanning."
             },
             {
                 question: "Hva innebærer interesseavveining ved oppsigelse?",
                 answers: [
-                    { text: "Vurdere om arbeidstaker kan jobbe i en annen avdeling", correct: false },
-                    { text: "Sammenligne arbeidstakers interesser med virksomhetens behov", correct: true },
-                    { text: "Vurdere arbeidstakers lønn", correct: false },
-                    { text: "Redusere antall ansatte", correct: false }
+                    { text: "A. Vurdere om arbeidstaker kan jobbe i en annen avdeling", correct: false },
+                    { text: "B. Sammenligne arbeidstakers interesser med virksomhetens behov", correct: true },
+                    { text: "C. Vurdere arbeidstakers lønn", correct: false },
+                    { text: "D. Redusere antall ansatte", correct: false }
                 ],
                 explanation: "Interesseavveining ved oppsigelse innebærer å sammenligne arbeidstakers interesser med virksomhetens behov."
             }
@@ -479,6 +469,7 @@
             const button = document.createElement('button');
             button.classList.add('answer');
             button.textContent = answer.text;
+            button.setAttribute('tabindex', '0');
             button.onclick = () => selectAnswer(answer, button);
             answersElement.appendChild(button);
         });
@@ -560,8 +551,8 @@
             `;
         });
         detailedResultsElement.innerHTML += `
-            <button onclick="shareResult()">Del resultat på LinkedIn</button>
-            <button onclick="shareResult()">Del resultat på Snapchat</button>
+            <button class="btn" onclick="shareResultLinkedIn()">Del resultat på LinkedIn</button>
+            <button class="btn" onclick="shareResultSnapchat()">Del resultat på Snapchat</button>
         `;
     }
 
@@ -587,12 +578,10 @@
 
     function toggleTheme() {
         if (theme === 'light') {
-            document.body.style.backgroundColor = '#333';
-            document.body.style.color = '#fff';
+            document.body.classList.add('blue-theme');
             theme = 'dark';
         } else {
-            document.body.style.backgroundColor = '#f4f4f4';
-            document.body.style.color = '#000';
+            document.body.classList.remove('blue-theme');
             theme = 'light';
         }
     }
@@ -602,6 +591,18 @@
         const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(resultMessage)}`;
         const snapchatUrl = `https://www.snapchat.com/scan?attachmentUrl=${encodeURIComponent(resultMessage)}`;
         window.open(linkedinUrl, '_blank');
+        window.open(snapchatUrl, '_blank');
+    }
+
+    function shareResultLinkedIn() {
+        const resultMessage = `Jeg har oppnådd ${score} poeng på QuizMaster! Prøv selv og se om du kan slå min score!`;
+        const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(resultMessage)}`;
+        window.open(linkedinUrl, '_blank');
+    }
+
+    function shareResultSnapchat() {
+        const resultMessage = `Jeg har oppnådd ${score} poeng på QuizMaster! Prøv selv og se om du kan slå min score!`;
+        const snapchatUrl = `https://www.snapchat.com/scan?attachmentUrl=${encodeURIComponent(resultMessage)}`;
         window.open(snapchatUrl, '_blank');
     }
 
