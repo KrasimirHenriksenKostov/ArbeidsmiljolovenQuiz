@@ -437,6 +437,7 @@
     let userName = '';
     let theme = 'light';
     let startTime = null;
+    let userAnswers = [];
 
     function setUserName() {
         userName = document.getElementById('username').value;
@@ -459,6 +460,7 @@
         document.getElementById('total-questions').textContent = questions[selectedCategory].length;
         currentQuestionIndex = 0;
         score = 0;
+        userAnswers = [];
         startTime = new Date();
         updateTimer();
         showQuestion(questions[selectedCategory][currentQuestionIndex]);
@@ -495,6 +497,14 @@
             if (!answer.correct && btn.innerText === questions[selectedCategory][currentQuestionIndex].answers.find(a => a.correct).text) {
                 btn.classList.add('correct');
             }
+        });
+
+        userAnswers.push({
+            question: questions[selectedCategory][currentQuestionIndex].question,
+            selected: button.innerText,
+            correct: answer.correct,
+            correctAnswer: questions[selectedCategory][currentQuestionIndex].answers.find(a => a.correct).text,
+            explanation: questions[selectedCategory][currentQuestionIndex].explanation
         });
 
         if (answer.correct) {
@@ -541,17 +551,18 @@
     function displayDetailedResults() {
         const detailedResultsElement = document.getElementById('detailed-results');
         detailedResultsElement.innerHTML = '<h3>Detaljerte resultater:</h3>';
-        questions[selectedCategory].forEach((question, index) => {
-            const userAnswer = document.querySelectorAll('.answer')[index].innerText;
-            const correctAnswer = question.answers.find(answer => answer.correct).text;
-            const isCorrect = userAnswer === correctAnswer;
+        userAnswers.forEach((answer, index) => {
             detailedResultsElement.innerHTML += `
-                <p>${index + 1}. ${question.question}</p>
-                <p>Ditt svar: ${userAnswer} - ${isCorrect ? 'Riktig' : 'Feil'}</p>
-                ${!isCorrect ? `<p>Riktig svar: ${correctAnswer}</p>` : ''}
-                <p>Forklaring: ${question.explanation}</p>
+                <p>${index + 1}. ${answer.question}</p>
+                <p>Ditt svar: ${answer.selected} - ${answer.correct ? 'Riktig' : 'Feil'}</p>
+                ${!answer.correct ? `<p>Riktig svar: ${answer.correctAnswer}</p>` : ''}
+                <p>Forklaring: ${answer.explanation}</p>
             `;
         });
+        detailedResultsElement.innerHTML += `
+            <button onclick="shareResult()">Del resultat på LinkedIn</button>
+            <button onclick="shareResult()">Del resultat på Snapchat</button>
+        `;
     }
 
     function updateLeaderboard() {
